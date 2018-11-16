@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/zhangongjx?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: zhangongjx@2018!05*03
+  thymeleaf:
+    mode: HTML
+  mail:
+    host: xx.xx
+    username: xx.xx
+    password: vxx.xx
+    default-encoding: utf-8
+    properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                     enable: true
+                     required: true
+conf:
+  sms_accessKeyId: xx.xx
+  sms_accessKeySecret: xx.xx
+  upload_path: /website/file/imgs/
+  img_url: http://images.zhangongjx.com/

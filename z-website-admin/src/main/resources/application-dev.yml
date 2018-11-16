@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3366/zgjx?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: admin123
+#    url: jdbc:mysql://47.104.7.154:3306/zhangongjx?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: zhangongjx@2018!05*03
+  thymeleaf:
+    mode: HTML
+  mail:
+    host: xx.xx
+    username: xx.xx
+    password: xx.xx
+    default-encoding: utf-8
+    properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                     enable: true
+                     required: true
+conf:
+  upload_path: D:\My\Java\file\
+  img_url: http://localhost:8891/
+  sms_accessKeyId: xx.xx
+  sms_accessKeySecret: xx.xx
+logging:
+  file: /website/log/zgjxAdmin.log

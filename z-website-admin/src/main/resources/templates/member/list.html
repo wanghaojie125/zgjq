@@ -1,0 +1,927 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        筛选条件
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-sm-3">
+                                <label class="col-sm-5 control-label">用户账号：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_id" name="search_id" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label class="col-sm-5 control-label">用户昵称：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_name" name="search_name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label class="col-sm-5 control-label">注册时间：</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group date form_datetime" data-date=""
+                                         data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="start_at">
+                                        <input class="form-control" id="read_search_date" size="16" type="text" value=""
+                                               readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                    <input type="hidden" id="search_date" name="search_date" value=""/><br/>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <button class="btn btn-white btn-outline" type="button" id="btnSearch">查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <div class="checkbox checkbox-inline i-checks">
+                                            <label>
+                                                <input type="checkbox" data-oper="gallary" value="0">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>用户ID账号</th>
+                            <th>联系人</th>
+                            <th>电话</th>
+                            <th>会员等级</th>
+                            <th>消费金额</th>
+                            <th>订单数量</th>
+                            <th>所属公司</th>
+                            <th>账户启用状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addTitle">编辑用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="gallaryForm">
+                        <input type="hidden" value="0" id="id" name="id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">手机号码：</label>
+                            <div class="col-sm-8">
+                                <input id="phone" name="phone" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">会员等级：</label>
+                            <div class="col-sm-8">
+                                <select id="level" name="level" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="黄金会员">黄金会员</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别：</label>
+                            <div class="col-sm-8">
+                                <div class="radio-inline i-checks">
+                                    <label>
+                                        <input type="radio" value="保密" name="sex"> <i></i>保密 </label>
+                                </div>
+                                <div class="radio-inline i-checks">
+                                    <label>
+                                        <input type="radio" value="男" name="sex"> <i></i> 男</label>
+                                </div>
+                                <div class="radio-inline i-checks">
+                                    <label>
+                                        <input type="radio" name="sex" value="女"> <i></i>
+                                        女</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">生日：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date form_datetime" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="birthday">
+                                    <input class="form-control" id="read_birthday" size="10" type="text" value=""
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" data-date-format="yyyy-mm-dd" id="birthday" name="birthday"
+                                       value=""/><br/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">城市：</label>
+                            <div class="col-sm-8" id="select_area">
+                                <div class="col-sm-6">
+                                    <select id="province" name="province" class="form-control">
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select id="city" name="city" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">职业：</label>
+                            <div class="col-sm-8">
+                                <input id="job" name="job" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">个性签名：</label>
+                            <div class="col-sm-8">
+                                <textarea id="signature" name="signature" class="form-control">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">新密码：</label>
+                            <div class="col-sm-8">
+                                <input id="new_pass_word" name="new_pass_word" type="password" class="form-control">
+                                </input>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">确认密码：</label>
+                            <div class="col-sm-8">
+                                <input id="confirm_pass_word" name="confirm_pass_word" type="password"
+                                       class="form-control">
+                                </input>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">账户启用状态：</label>
+                            <div class="col-sm-8">
+                                <input type="checkbox" id="enabled" name="enabled" value="1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();">关闭
+                    </button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">用户详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>用户信息</h5>
+                            </div>
+                            <div class="ibox-content" id="memberInfoDetail">
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <tr>
+                                        <td>
+                                            头像:
+                                        </td>
+                                        <td>
+                                            <p name="head_portrait"></p>
+                                        </td>
+                                        <td>
+                                            用户ID:
+                                        </td>
+                                        <td>
+                                            <p name="id"></p>
+                                        </td>
+                                        <td>
+                                            公司名称:
+                                        </td>
+                                        <td>
+                                            <p name="company"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            用户名:
+                                        </td>
+                                        <td>
+                                            <p name="user_name"></p>
+                                        </td>
+                                        <td>
+                                            姓名:
+                                        </td>
+                                        <td>
+                                            <p name="nick_name"></p>
+                                        </td>
+                                        <td>
+                                            所属行业:
+                                        </td>
+                                        <td>
+                                            <p name="job"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            会员等级:
+                                        </td>
+                                        <td>
+                                            <p name="level"></p>
+                                        </td>
+                                        <td>
+                                            邮箱:
+                                        </td>
+                                        <td>
+                                            <p name="email"></p>
+                                        </td>
+                                        <td>
+                                            所在城市:
+                                        </td>
+                                        <td>
+                                            <p name="city"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            电话:
+                                        </td>
+                                        <td>
+                                            <p name="phone"></p>
+                                        </td>
+                                        <td>
+                                            注册时间:
+                                        </td>
+                                        <td>
+                                            <p name="create_at"></p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>统计信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <tr>
+                                        <th>
+                                            消费金额
+                                        </th>
+                                        <th>
+                                            订单数量
+                                        </th>
+                                        <th>
+                                            附件上传次数
+                                        </th>
+                                        <th>
+                                            登录次数
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td id="orderAmount">
+                                            0
+                                        </td>
+                                        <td id="orderCount">
+                                            0
+                                        </td>
+                                        <td id="dwgCount">
+                                            0
+                                        </td>
+                                        <td id="loginCount">
+                                            0
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>收货信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <table id="dtConsignee"
+                                       class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>手机号码</th>
+                                        <th>详细地址</th>
+                                        <th>邮政编码</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>订单信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="ibox-content">
+                                    <table id="dtOrder"
+                                           class="table table-striped table-bordered table-hover dataTables-example">
+                                        <thead>
+                                        <tr>
+                                            <th>合同编号</th>
+                                            <th>起始时间</th>
+                                            <th>结束时间</th>
+                                            <th>订单金额</th>
+                                            <th>用户名称</th>
+                                            <th>合同负责人</th>
+                                            <th>公司名称</th>
+                                            <th>订单状态</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>登陆信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="ibox-content">
+                                    <table id="dtLogLogin"
+                                           class="table table-striped table-bordered table-hover dataTables-example">
+                                        <thead>
+                                        <tr>
+                                            <th>时间</th>
+                                            <th>IP</th>
+                                            <th>地区</th>
+                                            <th>登录方式</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">删除用户</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该用户
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Data picker -->
+    <script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+    <!-- Data picker -->
+    <script src="/content/js/jquery.city.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.gallary = {
+                init: function () {
+                    var _self = this;
+                    this.getData();
+                    $.validator.setDefaults({
+                        highlight: function (element) {
+                            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                        },
+                        success: function (element) {
+                            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                        },
+                        errorElement: "span",
+                        errorClass: "help-block m-b-none",
+                        validClass: "help-block m-b-none"
+                    });
+                    $('.form_datetime').datetimepicker({
+                        minView: "month",
+                        format: 'yyyy-mm-dd',
+                        todayBtn: 1,
+                        autoclose: 1,
+                    });
+                    $('input[name="sex"]').on('ifChecked', function () {
+                        $(this).prop('checked', true);
+                    });
+                    $('input[name="sex"]').on('ifUnchecked', function () {
+                        $(this).prop('checked', false);
+                    });
+                    $('#select_area').citys({
+                        required: false,
+                        nodata: 'disabled',
+                        onChange: function (data) {
+                            _self.province = data['province'];
+                            _self.city = data['city'];
+                        }
+                    });
+                    $('#btnSubmit').off().on('click', function () {
+                        if (_self.val().form()) {
+                            _self.submit();
+                        }
+                    });
+                },
+                province: "",
+                city: "",
+                submit: function () {
+                    var _self = this;
+                    var data = $("#gallaryForm").formToObj();
+                    data.province = _self.province;
+                    data.city = _self.city;
+                    var titel = "编辑用户"
+                    $.request("/member/save_member", data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success(titel, res.msg);
+                            $("#gallaryForm").resetForm();
+                            $('#addModal').modal('hide');
+                        }
+                        else {
+                            toastr.error(titel, res.msg);
+                        }
+                    });
+                },
+                val: function () {
+                    return $("#gallaryForm").validate({
+                        ignore: [],
+                        rules: {
+                            confirm_pass_word: {
+                                equalTo: "#new_pass_word"
+                            },
+                        },
+                        messages: {
+                            confirm_pass_word: {
+                                equalTo: "两次输入密码不一致"
+                            },
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    //var query='?search_name='+$('#search_name').val()+'&search_position='+$('#search_position').val()+'&search_date='+$('#search_date').val();
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/member/data",
+                            dataSrc: 'data',
+                            data: function (d) {
+                                var param = {};
+                                param.draw = d.draw;
+                                param.start = d.start;
+                                param.length = d.length;
+                                param.search_id = $('#search_id').val();
+                                param.search_name = $('#search_name').val();
+                                param.search_date = $('#search_date').val();
+                                return param;
+                            }
+                        },
+                        columns: [
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = ' <div class="form-group"> <div class="col-sm-10"> <div class="checkbox checkbox-inline i-checks"> <label> <input type="checkbox" data-oper="gallary" value="0"> </label> </div> </div> </div>';
+                                    return html;
+                                }
+                            },
+                            {data: "id"},
+                            {data: "user_name"},
+                            {
+                                data: "phone"
+                            },
+                            {
+                                data: "level"
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return 0;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return 0;
+                                }
+                            },
+                            {
+                                data: "company"
+                            },
+                            {
+                                data: "enabled",
+                                render: function (data, type, row, meta) {
+                                    var html = '<input data-oper="enabled" name="' + row.id + '" data-id="' + row.id + '" type="checkbox" class="js-switch" ' + (data == 0 ? "" : "checked") + '  />';
+                                    return html;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    var json = encodeURIComponent(JSON.stringify(row));
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-json="' + json + '" data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#detailModal" data-json="' + json + '" data-oper="detail" href="#">查看</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#deleteModal" data-oper="delete" href="#">删除</a>');
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            $('.i-checks').iCheck({
+                                handle: 'checkbox',
+                                checkboxClass: 'icheckbox_square-green',
+                                radioClass: 'iradio_square-green',
+                            });
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('input[data-oper="enabled"]'));
+                            elems.forEach(function (html) {
+                                var switchery = new Switchery(html);
+                                html.onchange = function () {
+                                    _self.enable($(this));
+                                }
+                            });
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var json = $(this).data('json');
+                                _self.edit(id, json);
+                            });
+                            $('a[data-oper="detail"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var json = $(this).data('json');
+                                _self.detail(id, json);
+                            });
+                            $('a[data-oper="delete"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.delete(id);
+                            });
+
+                            $('#length').on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#btnSearch').off().on('click', function () {
+                                var index = $("#length").val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+                delete: function (id) {
+                    var _self = this;
+                    $('#btnConfirmDelete').off().on('click', function () {
+                        $.request('/member/delete_member', {id: id}, function (res) {
+                            if (res.success) {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                                toastr.success("删除用户", res.msg);
+                            }
+                            else {
+                                toastr.error("删除用户", res.msg);
+                            }
+                            $('#deleteModal').modal('hide');
+                        });
+                    });
+                },
+                switchery: null,
+                edit: function (id, json) {
+                    var _self = this;
+                    var data = JSON.parse(decodeURIComponent(json));
+                    $('#gallaryForm .switchery').remove();
+                    $("#gallaryForm").ObjToForm(data);
+                    $('#read_birthday').val(data.birthday);
+                    $('#enabled').prop("checked", data.enabled == 1 ? true : false);
+                    $('#select_area').citys({
+                        valueType: 'name', province: data.province, city: data.city, onChange: function (data) {
+                            _self.province = data['province'];
+                            _self.city = data['city'];
+                        }
+                    });
+                    var elem = document.querySelector('#enabled');
+                    var switchery = new Switchery(elem);
+                    elem.onchange = function () {
+                        var v = $(this).prop("checked") == true ? 1 : 0;
+                        $(this).val(v);
+                    };
+                    // $('input[name="sex"][value="' + data.sex + '"]').attr('checked', "checked");
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $('#addTitle').text('修改用户');
+                },
+                detail: function (id, json) {
+                    var _self = this;
+                    var data = JSON.parse(decodeURIComponent(json));
+                    $("#memberInfoDetail").ObjToHtml(data, "p");
+                    $("#id").val(data.id);
+                    $('#memberInfoDetail').find('p[name="city"]').html(data.province + "," + data.city);
+                    $.getJSON("member/statistics", {member_id: id}, function (res) {
+                        if (res.success) {
+                            $('#loginCount').html(res.data.loginCount);
+                            $('#orderCount').html(res.data.orderCount);
+                            $('#orderAmount').html(res.data.orderAmount);
+                            $('#dwgCount').html(res.data.dwgCount);
+                        }
+                    });
+                    this.getOrderData();
+                    this.getConsigneeData();
+                    this.getLogLoginData();
+                    // if (_self.dtOrder) {
+                    //     _self.dtOrder.ajax.reload();
+                    // }
+                    // if (_self.dtConsignee) {
+                    //     _self.dtConsignee.ajax.reload();
+                    // }
+                },
+                dtOrder: null,
+                getOrderData: function () {
+                    var _self = this;
+                    if (this.dtOrder == null) {
+                        this.dtOrder = $('#dtOrder').DataTable({
+                            serverSide: true,
+                            searching: false,
+                            ordering: false,
+                            pageLength: 20,
+                            pagingType: "full_numbers",
+                            stateSave: true,
+                            bLengthChange: false,
+                            ajax: {
+                                url: "/order/list_data_member",
+                                dataSrc: 'data',
+                                data: function (d) {
+                                    var param = {};
+                                    param.draw = d.draw;
+                                    param.start = d.start;
+                                    param.length = d.length;
+                                    param.member_id = $('#id').val();
+                                    return param;
+                                }
+                            },
+                            columns: [
+                                {data: "contract_no"},
+                                {data: "start_at"},
+                                {
+                                    data: "end_at"
+                                },
+                                {
+                                    data: "amount"
+                                },
+                                {
+                                    data: "name"
+                                },
+                                {
+                                    data: "operator_name"
+                                },
+                                {
+                                    data: "company"
+                                },
+                                {
+                                    data: "status",
+                                    render: function (data, type, row, meta) {
+                                        var text = "";
+                                        switch (data) {
+                                            case 0:
+                                                text = '待付款';
+                                                break;
+                                            case 1:
+                                                text = '待发货';
+                                                break;
+                                            case 2:
+                                                text = '已发货';
+                                                break;
+                                            case 3:
+                                                text = '已收货';
+                                                break;
+                                            case 4:
+                                                text = '交易完成';
+                                                break;
+                                            case 5:
+                                                text = '交易关闭';
+                                                break;
+                                            default:
+                                                text = "异常订单";
+                                                break;
+                                        }
+                                        return text;
+                                    }
+                                },
+                            ],
+                            fnDrawCallback: function () {
+                            }
+                        });
+                    } else {
+                        _self.dtOrder.ajax.reload();
+                    }
+                },
+                dtLogLogin: null,
+                getLogLoginData: function () {
+                    var _self = this;
+                    if (this.dtLogLogin == null) {
+                        this.dtLogLogin = $('#dtLogLogin').DataTable({
+                            serverSide: true,
+                            searching: false,
+                            ordering: false,
+                            pageLength: 20,
+                            pagingType: "full_numbers",
+                            stateSave: true,
+                            bLengthChange: false,
+                            ajax: {
+                                url: "/member/list_log_login_data",
+                                dataSrc: 'data',
+                                data: function (d) {
+                                    var param = {};
+                                    param.draw = d.draw;
+                                    param.start = d.start;
+                                    param.length = d.length;
+                                    param.member_id = $('#id').val();
+                                    return param;
+                                }
+                            },
+                            columns: [
+                                {data: "create_at"},
+                                {data: "ip"},
+                                {
+                                    data: "area"
+                                },
+                                {
+                                    data: "browser"
+                                }
+                            ],
+                            fnDrawCallback: function () {
+                            }
+                        });
+                    } else {
+                        _self.dtLogLogin.ajax.reload();
+                    }
+                },
+                dtConsignee: null,
+                getConsigneeData: function () {
+                    var _self = this;
+                    if (this.dtConsignee == null) {
+                        this.dtConsignee = $('#dtConsignee').DataTable({
+                            serverSide: true,
+                            searching: false,
+                            ordering: false,
+                            pageLength: 20,
+                            pagingType: "full_numbers",
+                            stateSave: true,
+                            bLengthChange: false,
+                            ajax: {
+                                url: "/member/list_consignee",
+                                dataSrc: 'data',
+                                data: function (d) {
+                                    var param = {};
+                                    param.draw = d.draw;
+                                    param.start = d.start;
+                                    param.length = d.length;
+                                    param.member_id = $('#id').val();
+                                    return param;
+                                }
+                            },
+                            columns: [
+                                {data: "name"},
+                                {data: "phone"},
+                                {
+                                    data: null,
+                                    render: function (data, type, row, meta) {
+                                        var text = row.province + row.city + row.county + row.address;
+                                        return text;
+                                    }
+                                },
+                                {data: "post_code"},
+                            ],
+                            fnDrawCallback: function () {
+                            }
+                        });
+                    } else {
+                        _self.dtConsignee.ajax.reload();
+                    }
+                },
+                enable: function (obj) {
+                    var id = parseInt(obj.attr('name'));
+                    var enabled = obj.prop('checked') == true ? 1 : 0;
+                    var _self = this;
+                    $.request('/member/enable_member', {id: id, enabled: enabled}, function (res) {
+                        if (res.success) {
+                            toastr.success("用户状态", res.msg);
+                        }
+                        else {
+                            toastr.error("用户状态", res.msg);
+                        }
+                    });
+                }
+            }
+            $(function () {
+                $.gallary.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

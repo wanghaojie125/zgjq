@@ -1,0 +1,290 @@
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>会员增长情况</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-3 m-b-xs">
+                </div>
+                <div class="col-sm-3 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="type">
+                        <option value="month" selected="selected">按月显示</option>
+                        <option value="year">按年显示</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="year">
+                        <option value="2018" selected="selected">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2018">2021</option>
+                        <option value="2019">2022</option>
+                        <option value="2020">2023</option>
+                        <option value="2018">2024</option>
+                        <option value="2019">2025</option>
+                        <option value="2020">2026</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <button class="btn btn-white btn-outline" id="btnSearchMemGrowth">统计
+                    </button>
+                </div>
+            </div>
+            <div class="row" id="memberGrowthChat">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>会员消费金额分布</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-3 m-b-xs">
+                </div>
+                <div class="col-sm-3 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="amount_type">
+                        <option value="month" selected="selected">按月显示</option>
+                        <option value="year">按年显示</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="amount_year">
+                        <option value="2018" selected="selected">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2018">2021</option>
+                        <option value="2019">2022</option>
+                        <option value="2020">2023</option>
+                        <option value="2018">2024</option>
+                        <option value="2019">2025</option>
+                        <option value="2020">2026</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline" id="amount_month">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 m-b-xs">
+                    <button class="btn btn-white btn-outline" id="btnSearchMemAmount">统计
+                    </button>
+                </div>
+            </div>
+            <div class="row" id="amountChat">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Data picker -->
+<script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+<!-- highcharts -->
+<script src="/content/js/highcharts.js"></script>
+<script src="/content/js/funnel.js"></script>
+<script src="/content/js/exporting.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        $.gallary = {
+            init: function () {
+                var _self = this;
+                $('.form_datetime').datetimepicker({
+                    weekStart: 1,
+                    todayBtn: 1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    forceParse: 0,
+                    showMeridian: 1
+                });
+                this.get_mem_growth();
+                $('#btnSearchMemGrowth').off().on('click', function () {
+                    _self.get_mem_growth();
+                });
+                this.get_mem_amount();
+                $('#btnSearchMemAmount').off().on('click', function () {
+                    _self.get_mem_amount();
+                });
+            },
+            get_mem_growth: function () {
+                var data = {
+                    type: $('#type').val(),
+                    year: $('#year').val(),
+                    month: $('#month').val()
+                };
+                $.getJSON("statistics/mem_growth_by_time", data, function (res) {
+                    if (res.success) {
+                        var days;
+                        if (data.month == 2) {
+                            days = data.year % 4 == 0 ? 29 : 28;
+                        }
+                        else if (data.month == 1 || data.month == 3 || data.month == 5 || data.month == 7 || data.month == 8 || data.month == 10 || data.month == 12) {
+                            days = 31;
+                        }
+                        else {
+                            days = 30;
+                        }
+                        var x = [];
+                        var y = [];
+
+                        function _getcount(par) {
+                            for (var i in  res.data) {
+                                var item = res.data[i];
+                                if (data.type == "month") {
+                                    if (item.day == par) {
+                                        return item.count;
+                                    }
+                                }
+                                if (data.type == "year") {
+                                    if (item.month == par) {
+                                        return item.count;
+                                    }
+                                }
+                            }
+                            return 0;
+                        }
+
+                        if (data.type == "month") {
+                            for (var i = 1; i <= days; i++) {
+                                var date = data.year + '-' + data.month + "-" + i;
+                                x.push(date);
+                                y.push(_getcount(date));
+                            }
+                        }
+                        if (data.type == "year") {
+                            for (var i = 1; i <= 12; i++) {
+                                var month = data.year + '-' + i;
+                                x.push(month);
+                                y.push(_getcount(month));
+                            }
+                        }
+                        var chart = Highcharts.chart('memberGrowthChat', {
+                            title: {
+                                text: '会员增长统计图'
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '人数'
+                                }
+                            },
+                            xAxis: {
+                                categories: x,
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'right',
+                                verticalAlign: 'middle'
+                            },
+                            series: [{
+                                name: '新增会员数',
+                                data: y
+                            }],
+                            responsive: {
+                                rules: [{
+                                    condition: {
+                                        maxWidth: 500
+                                    },
+                                    chartOptions: {
+                                        legend: {
+                                            layout: 'horizontal',
+                                            align: 'center',
+                                            verticalAlign: 'bottom'
+                                        }
+                                    }
+                                }]
+                            }
+                        });
+                    }
+                });
+            },
+            get_mem_amount: function () {
+                var data = {
+                    type: $('#amount_type').val(),
+                    year: $('#amount_year').val(),
+                    month: $('#amount_month').val()
+                };
+                $.getJSON("statistics/get_mem_amount", data, function (res) {
+                    if (res.success) {
+                        var chartData = [];
+                        for (var i in res.data) {
+                            chartData.push(res.data[i]);
+                        }
+                        var chart = Highcharts.chart('amountChat', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: '交易数据'
+                            },
+                            xAxis: {
+                                categories: [
+                                    '0-50元', '51-100元', '101-200元', '201-500元', '501-1000元', '1001-5000元', '5001-10000元', '10001元以上'
+                                ],
+                                crosshair: true
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: '会员数 (个)'
+                                }
+                            },
+                            tooltip: {
+                                // head + 每个 point + footer 拼接成完整的 table
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.1f} 个</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    borderWidth: 0
+                                }
+                            },
+                            series: [{
+                                name: '价格区间',
+                                data: chartData
+                            }]
+                        });
+                    }
+                });
+            },
+        }
+        $(function () {
+            $.gallary.init();
+        });
+    })
+    (jQuery)
+</script>

@@ -1,0 +1,258 @@
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <form class="form-horizontal m-t" id="gallaryForm">
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>启用验证码：</label>
+                <div class="col-sm-8">
+                    <div class="checkbox i-checks">
+                        <label>
+                            <input type="checkbox" id="register" name="register" value="0"> <i></i> 新用户注册</label>
+                    </div>
+                    <div class="checkbox i-checks">
+                        <label>
+                            <input type="checkbox" id="login" name="login" value="0"> <i></i>用户登录</label>
+                    </div>
+                    <div class="checkbox i-checks">
+                        <label>
+                            <input type="checkbox" value="0" id="sys_login" name="sys_login">
+                            <i></i>后台系统登录</label>
+                    </div>
+                    <span class="help-block m-b-none">启用验证码可以避免恶意批量评论或提交信息，推荐打开验证码功能。注意: 启用验证码会使得部分操作变得繁琐，建议仅在必需时打开</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>登录失败时显示验证码：</label>
+                <div class="col-sm-8">
+                    <input type="checkbox" id="login_fail" name="login_fail" value="0">
+                    <span class="help-block m-b-none">
+                    选择“是”将在用户登录失败 3 次后才显示验证码，选择“否”将始终在登录时显示验证码。注意: 只有在启用了用户登录验证码时本设置才有效
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>* 验证码方式：</label>
+                <div class="col-sm-8">
+                    <select id="way" name="way" class="form-control">
+                        <option value="图形验证码" selected>图形验证码</option>
+                        <option value="滑动验证码">滑动验证码</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>图形验证码宽度：</label>
+                <div class="col-sm-8">
+                    <input type="text" id="width" name="width" class="form-control" value="">
+                    <span class="help-block m-b-none">
+                   验证码图片的宽度，范围在 40～145 之间
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>图形验证码高度：</label>
+                <div class="col-sm-8">
+                    <input id="height" name="height" type="text" class="form-control">
+                    <span class="help-block m-b-none">
+                   验证码图片的高度，范围在 15～50 之间
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>图形验证码内容大小：</label>
+                <div class="col-sm-8">
+                    <input id="size" name="size" type="text" class="form-control">
+                    <span class="help-block m-b-none">
+                       验证码内容大小，范围在16-20之间
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><span style="color:red;">*</span>图形验证码位数：</label>
+                <div class="col-sm-8">
+                    <input id="digit" name="digit" type="text" class="form-control">
+                    <span class="help-block m-b-none">
+                       图形验证码位数，范围4-6之间
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">图形验证码预览：</label>
+                <div class="col-sm-8">
+                    <img id="preview_img" src="/verify_code_preview?w=90&h=30&digit=5&size=18">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-3">
+                    <button class="btn btn-primary" id="btnSubmit" type="button">提交</button>
+                    <button class="btn btn-primary" id="btnPreview" type="button">预览</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Data picker -->
+    <script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.gallary = {
+                init: function () {
+                    var _self = this;
+                    this.val();
+                    this.getData();
+                    $('#btnSubmit').off().on('click', function () {
+                        if (_self.val().form()) {
+                            _self.submit();
+                        }
+                    });
+                    $('#btnPreview').off().on('click', function () {
+                        if (_self.val().form()) {
+                            var img_url = '/verify_code_preview?w=' + $('#width').val() + '&h=' + $('#height').val() + '&digit=' + $('#digit').val() + '&size=' + $('#size').val();
+                            $('#preview_img').attr('src', img_url);
+                        }
+                    });
+                    $.validator.setDefaults({
+                        highlight: function (element) {
+                            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                        },
+                        success: function (element) {
+                            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                        },
+                        errorElement: "span",
+                        errorClass: "help-block m-b-none",
+                        validClass: "help-block m-b-none"
+                    });
+                },
+                submit: function () {
+                    var _self = this;
+                    var data = $("#gallaryForm").formToObj();
+                    $.request("/conf/save_verify_code", data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success('验证码设置', res.msg);
+                        }
+                        else {
+                            toastr.error('验证码设置', res.msg);
+                        }
+                    });
+                },
+                val: function () {
+                    return $("#gallaryForm").validate({
+                        ignore: [],
+                        rules: {
+                            width: {
+                                required: true,
+                                min: 40,
+                                max: 145,
+                                digits: true
+                            },
+                            height: {
+                                required: true,
+                                min: 15,
+                                max: 50,
+                                digits: true
+                            },
+                            size: {
+                                required: true,
+                                min: 16,
+                                max: 20,
+                                digits: true
+                            },
+                            digit: {
+                                required: true,
+                                min: 4,
+                                max: 6,
+                                digits: true
+                            },
+                        },
+                        messages: {
+                            width: {
+                                required: "请输入图形验证码宽度",
+                                min: '请输入范围内的数字',
+                                max: '请输入范围内的数字',
+                                digits: '请输入合法的数字'
+                            },
+                            height: {
+                                required: "请输入图形验证码高度",
+                                min: '请输入范围内的数字',
+                                max: '请输入范围内的数字',
+                                digits: '请输入合法的数字'
+                            },
+                            size: {
+                                required: "请输入图形验证码内容大小",
+                                min: '请输入范围内的数字',
+                                max: '请输入范围内的数字',
+                                digits: '请输入合法的数字'
+                            },
+                            digit: {
+                                required: "请输入图形验证码位数",
+                                min: '请输入范围内的数字',
+                                max: '请输入范围内的数字',
+                                digits: '请输入合法的数字'
+                            },
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    $.getJSON("/conf/verify_code_data", {}, function (res) {
+                        if (res.success) {
+                            if (res.data) {
+                                $("#gallaryForm").ObjToForm(res.data);
+                                var img_url = '/verify_code_preview?w=' + res.data.width + '&h=' + res.data.height + '&digit=' + res.data.digit + '&size=' + res.data.size;
+                                $('#preview_img').attr('src', img_url);
+                            }
+                            if (res.data.register == 1) {
+                                $('#register').prop('checked', true);
+                            }
+                            if (res.data.login == 1) {
+                                $('#login').prop('checked', true);
+                            }
+                            if (res.data.sys_login == 1) {
+                                $('#sys_login').prop('checked', true);
+                            }
+                            if (res.data.sys_login == 1) {
+                                $('#login_fail').prop('checked', true);
+                            }
+                        }
+                        $('#register,#login,#sys_login').on('ifChecked', function () {
+                            $(this).val(1);
+                        });
+                        $('#register,#login,#sys_login').on('ifUnchecked', function () {
+                            $(this).val(0);
+                        });
+                        $('.i-checks').iCheck({
+                            handle: 'checkbox',
+                            checkboxClass: 'icheckbox_square-green',
+                            radioClass: 'iradio_square-green',
+                        });
+                        var elem = document.querySelector('#login_fail');
+                        var switchery = new Switchery(elem);
+                        elem.onchange = function () {
+                            var v = $(this).prop("checked") == true ? 1 : 0;
+                            $(this).val(v);
+                        };
+                    });
+                },
+            }
+            $(function () {
+                $.gallary.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

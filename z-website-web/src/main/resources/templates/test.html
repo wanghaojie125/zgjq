@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>basic-demo</title>
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+    <link href="/css/owl.theme.css" rel="stylesheet">
+    <script src="/js/template-web.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/owl.carousel.js"></script>
+</head>
+
+<body>
+<div id="content"></div>
+<!--<script id="test" type="text/html">-->
+    <!--<ul>-->
+        <!--{{each list value i}}-->
+        <!--<li>索引 {{i + 1}} ：{{value.id}}&#45;&#45;&#45;&#45;{{value.img}}</li>-->
+        <!--{{/each}}-->
+    <!--</ul>-->
+    <!--<hr>-->
+    <!--{{$data}}-->
+<!--</script>-->
+<div id="slidey" class="owl-carousel"></div>
+<script id="test" type="text/html">
+    {{$data}}
+    <br>
+        {{each list value i}}
+            <img src="{{value.img}}" alt=" ">
+        {{/each}}
+</script>
+<div id="owl-demo" ></div>
+<script id="proListData" type="text/html">
+    <br>
+    {{each list value i}}
+        <img src="{{value.img}}" alt=" ">
+    {{/each}}
+</script>
+<script>
+    let topList = [],proList = [], aiList = [], lastList = [];
+    $.getJSON("http://www.zhangongjx.com/api/goods_data", {}, function (res) {
+        if (res.success) {
+            $.each(res.data,function (i,item) {
+                switch (item.position){
+                    case 1: topList.push(item); break;
+                    case 2: proList.push(item); break;
+                    case 3: aiList.length < 4 && aiList.push(item); break;
+                    case 4: lastList.push(item); break;
+                }
+            });
+            var data = {
+                list: topList
+            };
+            var html = template('test', data);
+            document.getElementById('slidey').innerHTML = html;
+            $('#slidey').owlCarousel({
+                items: 1,
+                autoPlay: true
+            });
+
+            var proListData = {
+                list: proList
+            };
+            var htmlProListData = template('proListData', proListData);
+            document.getElementById('owl-demo').innerHTML = htmlProListData;
+            $('#owl-demo').owlCarousel({
+                autoPlay: 3000,
+//                items: 4,
+                itemsDesktop: [1100, 4],
+                itemsDesktopSmall: [414, 3],
+                autoHeight:false,
+                stopOnHover: true
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>

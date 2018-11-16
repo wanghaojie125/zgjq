@@ -1,0 +1,705 @@
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="row">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>今日订单总数</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="dayOrderCount">0</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>今日销售总额</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="dayAmount">￥0</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>昨日销售总额</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="yesterdayAmount">￥0</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>近7天销售总额</h5>
+            </div>
+            <div class="ibox-content">
+                <h1 class="no-margins" id="7dayAmount">￥0</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>待处理事务</h5>
+        </div>
+        <div class="ibox-content">
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+                <thead>
+                <tr>
+                    <th>待发货订单</th>
+                    <th>已完成订单</th>
+                    <th>待确认收货订单</th>
+                    <th>用户新上传图纸</th>
+                    <th>待处理图纸申请</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td id="payedOrderCount">0</td>
+                    <td id="completedOrderCount">0</td>
+                    <td id="sendedOrderCount">0</td>
+                    <td id="newDWGCount">0</td>
+                    <td id="dealDWGCount">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>运营快捷入口</h5>
+        </div>
+        <div class="ibox-content" id="shortcut">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/goods/save?id=0">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">添加商品</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/order/list">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-list fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">订单列表</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/member/list">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">用户管理</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/statistics/transaction">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-bank fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">交易统计</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/conf/ad_list">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-newspaper-o fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">广告管理</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="widget style1 navy-bg" style="cursor: pointer;" data-url="/dwg/list">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-image fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">图纸管理</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins ">
+            <div class="ibox-title">
+                <h5>商品总览</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>已下架</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="offGoodsCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>已上架</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="onGoodsCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>库存紧张</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="lowStoreGoodsCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>全部商品</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="allGoodsCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>用户总览</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>今日新增</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="dayMemberCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>昨日新增</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="yesterdayMemberCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>本月新增</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="monthMemberCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>会员总数</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h5 class="no-margins" id="allMemberCount">0</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins ">
+        <div class="ibox-title">
+            <h5>订单统计</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <form class="form-horizontal" id="orderForm">
+                    <div class="col-sm-2">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white" data-oper="order" data-d="day">
+                                <input type="radio" name="order">天</label>
+                            <label class="btn btn-sm btn-white active" data-oper="order" data-d="week">
+                                <input type="radio" name="order">周</label>
+                            <label class="btn btn-sm btn-white" data-oper="order" data-d="month">
+                                <input type="radio" name="order">月</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_order_start_date">
+                                <input class="form-control" id="read_search_order_start_date" size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_order_start_date" name="search_order_start_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1 text-center">
+                        <label class="col-sm-3 control-label">至</label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_order_end_date">
+                                <input class="form-control" id="read_search_order_end_date" size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_order_end_date" name="search_order_end_date" value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <button class="btn btn-white btn-outline" type="button" id="btnOrderSearch">统计</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div id="orderCount" class="col-lg-9" style="height: 200px;border: 1px solid #EBEBEB;"></div>
+                <div class="col-lg-3">
+                    <div class="ibox-content ibox-heading">
+                        <h3 id="month_count_growth">
+                            0
+                            <div class="stat-percent text-navy">0% <i class="fa fa-level-up"></i></div>
+                        </h3>
+                        <small> 本月订单总数(同比上月)</small>
+                    </div>
+                    <div class="ibox-content ibox-heading">
+                        <h3 id="week_count_growth">
+                            0
+                            <div class="stat-percent text-navy">0% <i class="fa fa-level-up"></i></div>
+                        </h3>
+                        <small> 本周订单总数(同比上周)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins ">
+        <div class="ibox-title">
+            <h5>销售统计</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <form class="form-horizontal" id="amountForm">
+                    <div class="col-sm-2">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white" data-oper="amount" data-d="day">
+                                <input type="radio" name="options">天</label>
+                            <label class="btn btn-sm btn-white active" data-oper="amount" data-d="week">
+                                <input type="radio" name="options">周</label>
+                            <label class="btn btn-sm btn-white" data-oper="amount" data-d="month">
+                                <input type="radio" name="options">月</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_amount_start_date">
+                                <input class="form-control" id="read_search_amount_start_date" size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_amount_start_date" name="search_amount_start_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1 text-center">
+                        <label class="col-sm-3 control-label">至</label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_amount_end_date">
+                                <input class="form-control" id="read_search_amount_end_date" size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_amount_end_date" name="search_amount_end_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <button class="btn btn-white btn-outline" type="button" id="btnAmountSearch">统计</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div id="orderAmount" class="col-lg-9" style="height: 200px;border: 1px solid #EBEBEB;"></div>
+                <div class="col-lg-3">
+                    <div class="ibox-content ibox-heading">
+                        <h3 id="month_amount_growth">
+                            0
+                            <div class="stat-percent text-navy">0% <i class="fa fa-level-up"></i></div>
+                        </h3>
+                        <small> 本月销售额(同比上月)</small>
+                    </div>
+                    <div class="ibox-content ibox-heading">
+                        <h3 id="week_amount_growth">
+                            0
+                            <div class="stat-percent text-navy">0% <i class="fa fa-level-up"></i></div>
+                        </h3>
+                        <small> 本周销售额(同比上周)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Data picker -->
+<script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+<!-- highcharts -->
+<script src="/content/js/highcharts.js"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        $.gallary = {
+            init: function () {
+                var _self = this;
+                $('.form_datetime').datetimepicker({
+                    weekStart: 1,
+                    todayBtn: 1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    forceParse: 0,
+                    showMeridian: 1
+                });
+                $('#shortcut .widget').off().on('click', function () {
+                    var url = $(this).data('url');
+                    $.jump(url);
+                });
+                this.order_7_count_amount_by_time();
+                this.order_status();
+                this.dwg_status();
+                this.goods_status();
+                this.member_by_time();
+                this.order_count_by_time();
+                this.order_amount_by_time();
+                this.order_growth();
+                $('#btnAmountSearch').off().on('click', function () {
+                    _self.order_amount_by_time();
+                });
+                $('#btnOrderSearch').off().on('click', function () {
+                    _self.order_count_by_time();
+                });
+            },
+            order_7_count_amount_by_time: function () {
+                $.getJSON("statistics/order_7_count_amount_by_time", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        var total = 0;
+                        var date = new Date();
+                        var day = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                        var yesterday = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() - 1);
+                        $(data).each(function () {
+                            if (this.date == day) {
+                                $('#dayOrderCount').html(this.count);
+                                $('#dayAmount').html('￥' + this.amount);
+                            }
+                            if (this.date == yesterday) {
+                                $('#yesterdayAmount').html('￥' + this.amount);
+                            }
+                            total += parseInt(this.amount);
+                        });
+                        $('#7dayAmount').html('￥' + total);
+                    }
+                });
+            },
+            order_status: function () {
+                $.getJSON("statistics/order_status", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        $(data).each(function () {
+                            if (this.status == 1) {
+                                $('#payedOrderCount').html(this.count);
+                            }
+                            if (this.status == 4) {
+                                $('#completedOrderCount').html(this.count);
+                            }
+                            if (this.status == 2) {
+                                $('#sendedOrderCount').html(this.count);
+                            }
+                        });
+                    }
+                });
+            },
+            dwg_status: function () {
+                $.getJSON("statistics/dwg_status", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        $(data).each(function () {
+                            if (this.status == 0) {
+                                $('#newDWGCount').html(this.count);
+                            }
+                            if (this.status == 0) {
+                                $('#dealDWGCount').html(this.count);
+                            }
+                        });
+                    }
+                });
+            },
+            goods_status: function () {
+                $.getJSON("statistics/goods_status", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        var total = 0;
+                        $(data).each(function () {
+                            //商品总览
+                            if (this.status == 0) {
+                                $('#offGoodsCount').html(this.count);
+                                $('#lowStoreGoodsCount').html(this.alarm_count);
+
+                            }
+                            if (this.status == 1) {
+                                $('#onGoodsCount').html(this.count);
+                                $('#lowStoreGoodsCount').html(this.alarm_count);
+                            }
+                            total += parseInt(this.count);
+                        });
+                        $('#allGoodsCount').html(total);
+                    }
+                });
+            },
+            member_by_time: function () {
+                $.getJSON("statistics/member_by_time", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        if (data) {
+                            $('#dayMemberCount').html(data.day);
+                            $('#yesterdayMemberCount').html(data.yesterday);
+                            $('#monthMemberCount').html(data.month);
+                            $('#allMemberCount').html(data.count);
+                        }
+                    }
+                });
+            },
+            order_growth: function () {
+                $.getJSON("statistics/order_growth", {}, function (res) {
+                    if (res.success) {
+                        var data = res.data;
+                        if (data) {
+                            $('#month_count_growth').html(data.monthCount + '<div class="stat-percent ' + (data.monthCountGrowth > 0 ? 'text-navy' : 'text-danger') + '">' + Math.abs(data.monthCountGrowth) + '% <i class="fa fa-level-' + (data.monthCountGrowth > 0 ? 'up' : 'down') + '"></i></div>');
+                            $('#week_count_growth').html(data.weekCount + '<div class="stat-percent ' + (data.weekCountGrowth > 0 ? 'text-navy' : 'text-danger') + '">' + Math.abs(data.weekCountGrowth) + '% <i class="fa fa-level-' + (data.weekCountGrowth > 0 ? 'up' : 'down') + '"></i></div>');
+                            $('#month_amount_growth').html(data.monthAmount + '<div class="stat-percent ' + (data.monthAmountGrowth > 0 ? 'text-navy' : 'text-danger') + '">' + Math.abs(data.monthAmountGrowth) + '% <i class="fa fa-level-' + (data.monthAmountGrowth > 0 ? 'up' : 'down') + '"></i></div>');
+                            $('#week_amount_growth').html(data.weekAmount + '<div class="stat-percent ' + (data.weekAmountGrowth > 0 ? 'text-navy' : 'text-danger') + '">' + Math.abs(data.weekAmountGrowth) + '% <i class="fa fa-level-' + (data.weekAmountGrowth > 0 ? 'up' : 'down') + '"></i></div>');
+                        }
+                    }
+                });
+            },
+            order_count_by_time: function () {
+                var data = {
+                    day: "0",
+                    week: "0",
+                    month: "0",
+                    start: "",
+                    end: ""
+                };
+                $('label[data-oper="order"]').each(function () {
+                    var d = $(this).data("d");
+                    if ($(this).hasClass("active")) {
+                        data[d] = "1";
+                    }
+                    else {
+                        data[d] = "0";
+                    }
+                });
+                data.start = $('#search_order_start_date').val();
+                data.end = $('#search_order_end_date').val();
+                $.getJSON("statistics/order_count_by_time", data, function (res) {
+                    if (res.success) {
+
+                        var x = [];
+                        var y = [];
+                        $(res.data).each(function () {
+                            x.push(this.date);
+                            y.push(this.count);
+                        });
+
+                        var chart = Highcharts.chart('orderCount', {
+                            chart: {
+                                type: 'areaspline'
+                            },
+                            title: {
+                                text: '订单统计'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'left',
+                                verticalAlign: 'top',
+                                x: 150,
+                                y: 100,
+                                floating: true,
+                                borderWidth: 1,
+                                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                            },
+                            xAxis: {
+                                categories: x,
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '订单数 个'
+                                }
+                            },
+                            tooltip: {
+                                shared: true,
+                                valueSuffix: ' 个'
+                            },
+                            plotOptions: {
+                                areaspline: {
+                                    fillOpacity: 0.5
+                                }
+                            },
+                            series: [{
+                                name: '日期',
+                                data: y
+                            }]
+                        });
+                    }
+                });
+            },
+            order_amount_by_time: function () {
+                var data = {
+                    day: "0",
+                    week: "0",
+                    month: "0",
+                    start: "",
+                    end: ""
+                };
+                $('label[data-oper="amount"]').each(function () {
+                    var d = $(this).data("d");
+                    if ($(this).hasClass("active")) {
+                        data[d] = "1";
+                    }
+                    else {
+                        data[d] = "0";
+                    }
+                });
+                data.start = $('#search_amount_start_date').val();
+                data.end = $('#search_amount_end_date').val();
+                $.getJSON("statistics/order_amount_by_time", data, function (res) {
+                    if (res.success) {
+
+                        var x = [];
+                        var y = [];
+                        $(res.data).each(function () {
+                            x.push(this.date);
+                            y.push(this.amount);
+                        });
+
+                        var chart = Highcharts.chart('orderAmount', {
+                            chart: {
+                                type: 'areaspline'
+                            },
+                            title: {
+                                text: '销售统计'
+                            },
+                            legend: {
+                                layout: 'vertical',
+                                align: 'left',
+                                verticalAlign: 'top',
+                                x: 150,
+                                y: 100,
+                                floating: true,
+                                borderWidth: 1,
+                                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+                            },
+                            xAxis: {
+                                categories: x,
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '销售金额 元'
+                                }
+                            },
+                            tooltip: {
+                                shared: true,
+                                valueSuffix: ' 元'
+                            },
+                            plotOptions: {
+                                areaspline: {
+                                    fillOpacity: 0.5
+                                }
+                            },
+                            series: [{
+                                name: '日期',
+                                data: y
+                            }]
+                        });
+                    }
+                });
+            }
+        }
+        $(function () {
+            $.gallary.init();
+        });
+    })(jQuery)
+
+</script>

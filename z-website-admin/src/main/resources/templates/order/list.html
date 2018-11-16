@@ -1,0 +1,1088 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        筛选条件
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">输入搜索：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_id" name="search_id" placeholder="订单编号/公司名称" type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">收货人：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_name" placeholder="收货人姓名/手机号码" name="search_name" type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <label class="col-sm-3 control-label">开始时间：</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group date form_datetime" data-date=""
+                                         data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="start_at">
+                                        <input class="form-control" id="read_search_start_date" size="16" type="text"
+                                               value=""
+                                               readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                    <input type="hidden" id="search_start_date" name="search_start_date" value=""/><br/>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <label class="col-sm-3 control-label">结束时间：</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group date form_datetime" data-date=""
+                                         data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="start_at">
+                                        <input class="form-control" id="read_search_end_date" size="16" type="text"
+                                               value=""
+                                               readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                    <input type="hidden" id="search_end_date" name="search_end_date" value=""/><br/>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <button class="btn btn-white btn-outline" type="button" id="btnSearch">查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <button class="btn btn-white btn-outline" data-toggle="modal" data-target="#addModeal"
+                                    type="button">添加订单
+                            </button>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="select_status">
+                                <option value="" selected="selected">订单状态</option>
+                                <option value="0">待付款</option>
+                                <option value="1">待发货</option>
+                                <option value="2">已发货</option>
+                                <option value="3">已收货</option>
+                                <option value="4">交易完成</option>
+                                <option value="5">交易关闭</option>
+                                <option value="6">异常订单</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <div class="checkbox checkbox-inline i-checks">
+                                            <label>
+                                                <input type="checkbox" data-oper="goods" value="0">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>合同编号</th>
+                            <th>起始时间</th>
+                            <th>结束时间</th>
+                            <th>订单金额</th>
+                            <th>联系人</th>
+                            <th>合同负责人</th>
+                            <th>公司名称</th>
+                            <th>订单状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="addModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only"
+                                                                   onclick="$('#formOrderInfo').resetForm(); $('#dtGoods .tr_data').remove();">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="order_title">添加订单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>用户信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <form class="form-horizontal" id="formOrderInfo">
+                                    <input type="hidden" id="id" name="id" value="0">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">选择用户：</label>
+                                        <div class="col-sm-10">
+                                            <select class="input-sm form-control input-s-sm inline" name="member_id"
+                                                    id="member_id">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">收货地址：</label>
+                                        <div class="col-sm-10">
+                                            <select class="input-sm form-control input-s-sm inline" name="consignee_id"
+                                                    id="consignee_id">
+                                            </select>
+                                            <input type="hidden" id="consignee" name="consignee" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">公司名称：</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="company" name="company" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">合同编号：</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="contract_no" name="contract_no"
+                                                   placeholder="不输入合同编号，则系统自动生成" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">合同负责人：</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="operator_name" readonly name="operator_name"
+                                                   value="当前登录操作用户" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">收货人：</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="name" name="name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">联系电话：</label>
+                                        <div class="col-lg-7">
+                                            <input type="text" id="phone" name="phone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">备注：</label>
+                                        <div class="col-lg-7">
+                                            <textarea id="remark" name="remark" class="form-control">
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">起始时间：</label>
+                                        <div class="col-lg-7">
+                                            <div class="input-group date form_datetime" data-date=""
+                                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="start_at">
+                                                <input class="form-control" id="read_start_at" size="16" type="text"
+                                                       value=""
+                                                       readonly>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-th"></span></span>
+                                            </div>
+                                            <input type="hidden" id="start_at" name="start_at" value=""/><br/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">结束时间：</label>
+                                        <div class="col-lg-7">
+                                            <div class="input-group date form_datetime" data-date=""
+                                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="end_at">
+                                                <input class="form-control" id="read_end_at" size="16" type="text"
+                                                       value=""
+                                                       readonly>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-remove"></span></span>
+                                                <span class="input-group-addon"><span
+                                                        class="glyphicon glyphicon-th"></span></span>
+                                            </div>
+                                            <input type="hidden" id="end_at" name="end_at" value=""/><br/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>产品信息</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link" id="edit_count">
+                                        数量总计：0
+                                    </a>
+                                    <a class="collapse-link" id="edit_amount">
+                                        金额总计：￥0
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <form id="goods_Form">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>序列号</th>
+                                            <th>产品名称</th>
+                                            <th>产品型号</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>单价</th>
+                                            <th>总价</th>
+                                            <th>订货日期</th>
+                                            <th>备注</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="dtGoods">
+                                        <tr id="btn_list">
+                                            <td colspan="10">
+                                                <button type="button" id="btnAddGoods"
+                                                        class="btn btn-block btn-outline btn-primary">添加新品
+                                                </button>
+                                                <button type="button" id="btnSaveGoods" style="display: none;"
+                                                        class="btn btn-block btn-outline btn-primary">保存
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>操作信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>操作者</th>
+                                        <th>操作时间</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="edit_oper">
+                                    <tr>
+                                        <td colspan="3">当前登录用户为操作者</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white"
+                            onclick="$('#formOrderInfo').resetForm(); $('#dtGoods .tr_data').remove();"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnSaveOrder" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="detailModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-full">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">订单详情</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>用户信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <form class="form-horizontal" id="detailformOrderInfo">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">收货地址：</label>
+                                        <div class="col-sm-10">
+                                            <p name="consignee"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">公司名称：</label>
+                                        <div class="col-lg-7">
+                                            <p name="company"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">合同编号：</label>
+                                        <div class="col-lg-7">
+                                            <p name="contract_no"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">合同负责人：</label>
+                                        <div class="col-lg-7">
+                                            <p name="operator_name"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">收货人：</label>
+                                        <div class="col-lg-7">
+                                            <p name="name"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">联系电话：</label>
+                                        <div class="col-lg-7">
+                                            <p name="phone"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">备注：</label>
+                                        <div class="col-lg-7">
+                                            <p name="remark"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">起始时间：</label>
+                                        <div class="col-lg-7">
+                                            <p name="start_at"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label class="col-lg-5 control-label">结束时间：</label>
+                                        <div class="col-lg-7">
+                                            <p name="end_at"></p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>产品信息</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link" id="detail_count">
+                                        数量总计：0
+                                    </a>
+                                    <a class="collapse-link" id="detail_amount">
+                                        金额总计：￥0
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>序列号</th>
+                                        <th>产品名称</th>
+                                        <th>产品型号</th>
+                                        <th>数量</th>
+                                        <th>单位</th>
+                                        <th>单价</th>
+                                        <th>总价</th>
+                                        <th>订货日期</th>
+                                        <th>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dtGoodsDetail">
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>操作信息</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>操作者</th>
+                                        <th>操作时间</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="detail_oper">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="wayModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">添加运单号</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="wawForm">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">运单号：</label>
+                            <div class="col-lg-10">
+                                <input type="text" id="waybill_no" name="waybill_no" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnSavewaybill_no" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="statusModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title">订单状态</h4>
+                </div>
+                <div class="modal-body" id="status_text">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmStatus" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="addGoodsTemplate" type="text/html">
+        <tr class="activee">
+            <td>
+                <div class="form-group">
+                    <input name="no" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="goods_name" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="goods_model" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="count" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="unit" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="price" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="total_price" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input name="date" type="text" style="width: 100%;">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                <textarea name="remark" type="text" style="width: 100%;">
+                </textarea>
+                </div>
+            </td>
+            <td><a data-id="0" data-oper="delete">删除</a></td>
+        </tr>
+    </script>
+    <script id="saveGoodsTemplate" type="text/html">
+        <tr class="tr_data">
+            <td class="data">{{data.no}}</td>
+            <td class="data">{{data.goods_name}}</td>
+            <td class="data">{{data.goods_model}}</td>
+            <td class="data">{{data.count}}</td>
+            <td class="data">{{data.unit}}</td>
+            <td class="data">{{data.price}}</td>
+            <td class="data">{{data.total_price}}</td>
+            <td class="data">{{data.date}}</td>
+            <td class="data">{{data.remark}}</td>
+            <td><a data-id="0" data-oper="delete" href="#">删除</a></td>
+        </tr>
+    </script>
+    <script id="detailGoodsTemplate" type="text/html">
+        <tr class="tr_data">
+            <td class="data">{{data.no}}</td>
+            <td class="data">{{data.goods_name}}</td>
+            <td class="data">{{data.goods_model}}</td>
+            <td class="data">{{data.count}}</td>
+            <td class="data">{{data.unit}}</td>
+            <td class="data">{{data.price}}</td>
+            <td class="data">{{data.total_price}}</td>
+            <td class="data">{{data.date}}</td>
+            <td class="data">{{data.remark}}</td>
+            <td></td>
+        </tr>
+    </script>
+
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Data picker -->
+    <script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (element) {
+                    element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: "span",
+                errorClass: "help-block m-b-none",
+                validClass: "help-block m-b-none"
+            });
+            $.order = {
+                init: function () {
+                    var _self = this;
+                    this.getData();
+                    this.init_member();
+                    this.init_add_goods();
+                    $('.form_datetime').datetimepicker({
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        forceParse: 0,
+                        showMeridian: 1
+                    });
+                    $('#btnSaveOrder').off().on('click', function () {
+                        var f = $('#formOrderInfo').validate({
+                            ignore: [],
+                            rules: {
+                                member_id: {
+                                    required: true,
+                                    min: 1
+                                },
+                                consignee_id: {
+                                    required: true,
+                                    min: 1
+                                },
+                                company: "required",
+                                name: "required",
+                                phone: "required",
+                                start_at: "required",
+                                end_at: "required"
+                            },
+                            messages: {
+                                member_id: {
+                                    required: '请选择用户',
+                                    min: '请选择用户'
+                                },
+                                consignee_id: {
+                                    required: '请选择收件地址',
+                                    min: '请选择收件地址'
+                                },
+                                company: "请输入公司",
+                                name: "请输入联系人",
+                                phone: "请输入电话",
+                                start_at: "请选择开始时间",
+                                end_at: "请选择结束时间"
+                            }
+                        });
+                        if (f.form()) {
+
+                            var orderInfo = $('#formOrderInfo').formToObj();
+                            var l = $('.tr_data').length;
+                            if (l < 1) {
+                                toastr.error("添加订单", "请填写商品信息");
+                                return false;
+                            }
+                            var goodsInfo = [];
+                            $('.tr_data').each(function () {
+                                var d = [];
+                                $(this).find('td[class="data"]').each(function () {
+                                    d.push($(this).html().trim());
+                                });
+                                goodsInfo.push(d.join(','));
+                            });
+
+                            orderInfo.remark = orderInfo.remark.trim();
+                            orderInfo.goods = goodsInfo.join('|');
+                            $.request('/order/save', orderInfo, function (res) {
+                                if (res.success) {
+                                    if (_self.table) {
+                                        _self.table.ajax.reload();
+                                    }
+                                    toastr.success("添加订单", res.msg);
+                                }
+                                else {
+                                    toastr.error("添加订单", res.msg);
+                                }
+                                $('#formOrderInfo').resetForm();
+                                $('#dtGoods .tr_data').remove();
+                                $('#addModeal').modal('hide');
+                            });
+                        }
+                    });
+                },
+                init_add_goods: function () {
+                    $('#btnAddGoods').off().on('click', function () {
+                        var html = template('addGoodsTemplate', null);
+                        $('#btn_list').before(html);
+                        $(this).hide();
+                        $('#btnSaveGoods').show();
+                    });
+                    $('#btnSaveGoods').off().on('click', function () {
+                        var f = $('#goods_Form').validate({
+                            rules: {
+                                no: {
+                                    required: true,
+                                    number: true
+                                },
+                                goods_name: "required",
+                                goods_model: "required",
+                                count: {
+                                    required: true,
+                                    number: true
+                                },
+                                unit: "required",
+                                price: {
+                                    required: true,
+                                    number: true
+                                },
+                                total_price: {
+                                    required: true,
+                                    number: true
+                                },
+                                date: "required",
+                            },
+                            messages: {
+                                no: {
+                                    required: "请输入序号",
+                                    number: "请输入数字"
+                                },
+                                goods_name: "请输入产品名称",
+                                goods_model: "请输入产品型号",
+                                count: {
+                                    required: '请输入数量',
+                                    number: '请输入数字'
+                                },
+                                unit: "请输入单位",
+                                price: {
+                                    required: '请输入金额',
+                                    number: '请输入数字'
+                                },
+                                total_price: {
+                                    required: '请输入总金额',
+                                    number: '请输入数字'
+                                },
+                                date: "请输入日期",
+                            }
+                        });
+                        if (f && f.form()) {
+                            var data = $('#dtGoods tr.activee').formToObj();
+                            var dt = {
+                                data: data
+                            };
+                            var html = template('saveGoodsTemplate', dt);
+                            $('#dtGoods tr.activee').remove();
+                            $('#btn_list').before(html);
+                            $(this).hide();
+                            $('#btnAddGoods').show();
+                        }
+                    });
+                    $('#dtGoods').delegate('a[data-oper="delete"]', 'click', function () {
+                        $(this).parent().parent().remove();
+                    });
+                },
+                init_member: function () {
+                    $.getJSON("/member/all_data", {}, function (res) {
+                        if (res.success) {
+                            var html = [' <option>选择用户</option>'];
+                            $(res.data).each(function () {
+                                var json = encodeURIComponent(JSON.stringify(this));
+                                html.push(' <option data-json="' + json + '" value="' + this.id + '">' + this.user_name + '-' + this.phone + '</option>');
+                            });
+                            $('#member_id').html(html.join(''));
+                            $('#member_id').on('change', function () {
+                                var id = $(this).val();
+                                var json = $(this).find(':selected').data('json');
+                                var data = JSON.parse(decodeURIComponent(json));
+                                $('#company').val(data.company);
+                                $.getJSON("/member/all_consignee", {member_id: id}, function (res) {
+                                    if (res.success) {
+                                        var html = [' <option>选择地址</option>'];
+                                        $(res.data).each(function () {
+                                            var json = encodeURIComponent(JSON.stringify(this));
+                                            var address = this.name + '-' + this.phone + '-' + this.province + this.city + this.county + this.address;
+                                            html.push(' <option  data-json="' + json + '" value="' + this.id + '">' + address + '</option>');
+                                        });
+                                        $('#consignee_id').html(html.join(''));
+                                        $('#consignee_id').on('change', function () {
+                                            var cjson = $(this).find(':selected').data('json');
+                                            var text = $(this).find(':selected').text();
+                                            var cdata = JSON.parse(decodeURIComponent(cjson));
+                                            $('#name').val(cdata.name);
+                                            $('#phone').val(cdata.phone);
+                                            $('#consignee').val(text);
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/order/list_data",
+                            dataSrc: 'data',
+                            data: function (d) {
+                                var param = {};
+                                param.draw = d.draw;
+                                param.start = d.start;
+                                param.length = d.length;
+                                param.search_id = $('#search_id').val();
+                                param.search_name = $('#search_name').val();
+                                param.search_start_date = $('#search_start_date').val();
+                                param.search_end_date = $('#search_end_date').val();
+                                param.select_status = $('#select_status').val();
+                                return param;
+                            }
+                        },
+                        columns: [
+                            {
+                                data: "null",
+                                render: function (data, type, row, meta) {
+                                    var html = ' <div class="form-group"> <div class="col-sm-10"> <div class="checkbox checkbox-inline i-checks"> <label> <input type="checkbox" data-oper="goods" value="0"> </label> </div> </div> </div>';
+                                    return html;
+                                }
+                            },
+                            {data: "contract_no"},
+                            {
+                                data: "create_at",
+                            },
+                            {data: "end_at"},
+                            {
+                                data: "amount",
+                            },
+                            {data: "name"},
+                            {data: "operator_name"},
+                            {data: "company"},
+                            {
+                                data: "status",
+                                render: function (data, type, row, meta) {
+                                    var text = "";
+                                    switch (data) {
+                                        case 0:
+                                            text = '待付款';
+                                            break;
+                                        case 1:
+                                            text = '待发货';
+                                            break;
+                                        case 2:
+                                            text = '已发货';
+                                            break;
+                                        case 3:
+                                            text = '已收货';
+                                            break;
+                                        case 4:
+                                            text = '交易完成';
+                                            break;
+                                        case 5:
+                                            text = '交易关闭';
+                                            break;
+                                        default:
+                                            text = "异常订单";
+                                            break;
+                                    }
+                                    return text;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#detailModeal" data-oper="detail" href="#">查看</a>&nbsp;&nbsp;&nbsp;');
+                                    var text = "";
+                                    var oper = "";
+                                    switch (row.status) {
+                                        case 0:
+                                            text = '确认收款';
+                                            oper = "1";
+                                            break;
+                                        case 1:
+                                            text = '确认发货';
+                                            oper = "2";
+                                            break;
+                                        case 2:
+                                            text = '确认收货';
+                                            oper = "3";
+                                            break;
+                                        case 3:
+                                            text = '交易完成';
+                                            oper = "4";
+                                            break;
+                                        default:
+                                            text = "关闭订单";
+                                            oper = "5";
+                                            break;
+                                    }
+
+                                    html.push('<a data-id="' + row.id + '" data-text="' + text + '" data-order="status" data-oper="' + oper + '" href="#">' + text + '</a>&nbsp;&nbsp;&nbsp;')
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            $('a[data-oper="detail"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.detail(id);
+                            });
+
+                            $('a[data-order="status"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var oper = $(this).data('oper');
+                                var text = $(this).data('text');
+                                _self.orderStauts(id, oper, text);
+                            });
+
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.edit(id);
+                            });
+                            $('#length').on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#select_status').on('change', function () {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#btnSearch').off().on('click', function () {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+                detail: function (id) {
+                    $.getJSON("/order/get_order", {id: id}, function (res) {
+                        if (res.success) {
+                            $('#detailformOrderInfo').ObjToHtml(res.data, 'p');
+                            $('#detail_count').html('数量总计：' + res.data.count);
+                            $('#detail_amount').html('金额总计：￥' + res.data.amount);
+                            var oper_html = '<tr><td>' + res.data.operator_name + '</td><td>' + res.data.update_at + '</td><td>' + res.data.remark + '</td></tr>';
+                            $('#detail_oper').html(oper_html);
+                            $.getJSON("/order/get_order_detail", {contract_no: res.data.contract_no}, function (res) {
+                                if (res.success) {
+                                    var html = [];
+                                    $(res.data).each(function () {
+                                        var data = {data: this};
+                                        var h = template('detailGoodsTemplate', data);
+                                        html.push(h);
+                                    });
+                                    $('#dtGoodsDetail').html(html.join(''));
+                                }
+                            });
+                        }
+                    });
+                },
+                edit: function (id) {
+                    $('#order_title').html('修改订单');
+                    $.getJSON("/order/get_order", {id: id}, function (res) {
+                        if (res.success) {
+                            $('#formOrderInfo').ObjToForm(res.data);
+                            var con_id = res.data.consignee_id;
+                            $('#read_end_at').val(res.data.end_at);
+                            $('#read_start_at').val(res.data.start_at);
+                            $('#edit_count').html('数量总计：' + res.data.count);
+                            $('#edit_amount').html('金额总计：￥' + res.data.amount);
+                            $('#contract_no').prop('readonly', true);
+                            var oper_html = '<tr><td>' + res.data.operator_name + '</td><td>' + res.data.update_at + '</td><td>' + res.data.remark + '</td></tr>';
+                            $('#edit_oper').html(oper_html);
+                            $.getJSON("/member/all_consignee", {member_id: res.data.member_id}, function (res) {
+                                if (res.success) {
+                                    var html = [' <option>选择地址</option>'];
+                                    $(res.data).each(function () {
+                                        var json = encodeURIComponent(JSON.stringify(this));
+                                        var address = this.name + '-' + this.phone + '-' + this.province + this.city + this.county + this.address;
+                                        html.push(' <option  data-json="' + json + '" value="' + this.id + '">' + address + '</option>');
+                                    });
+                                    $('#consignee_id').html(html.join(''));
+                                    $('#consignee_id').val(con_id);
+                                    $('#consignee_id').on('change', function () {
+                                        var cjson = $(this).find(':selected').data('json');
+                                        var text = $(this).find(':selected').text();
+                                        var cdata = JSON.parse(decodeURIComponent(cjson));
+                                        $('#name').val(cdata.name);
+                                        $('#phone').val(cdata.phone);
+                                        $('#consignee').val(text);
+                                    });
+                                }
+                            });
+                            $.getJSON("/order/get_order_detail", {contract_no: res.data.contract_no}, function (res) {
+                                if (res.success) {
+                                    var html = [];
+                                    $(res.data).each(function () {
+                                        var data = {data: this};
+                                        var h = template('saveGoodsTemplate', data);
+                                        html.push(h);
+                                    });
+                                    $('#dtGoods .tr_data').remove();
+                                    $('#btn_list').before(html.join(''));
+                                }
+                            });
+                        }
+                    });
+                },
+                orderStauts: function (id, oper, text) {
+                    var _self = this;
+                    if (oper == "2" || oper == 2) {
+                        $('#wayModeal').modal('show');
+                        $('#btnSavewaybill_no').off().on('click', function () {
+                            var f = $('#wawForm').validate({
+                                rules: {
+                                    waybill_no: "required",
+                                },
+                                messages: {
+                                    waybill_no: "请输入运单号",
+                                }
+                            });
+                            if (f.form()) {
+                                _self.save_order_status(id, oper, $('#waybill_no').val());
+                            }
+                        });
+                    }
+                    else {
+                        $('#statusModeal').modal('show');
+                        $('#status_text').html('是否进行' + text + "操作！");
+                        $('#btnConfirmStatus').off().on('click', function () {
+                            _self.save_order_status(id, oper, "");
+                        });
+                    }
+                    //wawForm
+                }
+                ,
+                save_order_status: function (id, oper, way) {
+                    var _self = this;
+                    var data = {
+                        id: id,
+                        status: oper,
+                        waybill_no: way
+                    }
+                    $.request('/order/save_status', data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success("订单状态", res.msg);
+                        }
+                        else {
+                            toastr.error("订单状态", res.msg);
+                        }
+                        $('#wayModeal').resetForm();
+                        $('#wayModeal').modal('hide');
+                        $('#wayModeal').modal('hide');
+                    });
+                }
+            }
+            $(function () {
+                    $.order.init();
+                }
+            )
+            ;
+        })(jQuery)
+
+    </script>
+</div>

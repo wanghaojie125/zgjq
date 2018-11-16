@@ -1,0 +1,587 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        筛选条件
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">输入搜索：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_id" name="search_id" placeholder="商品名称/商品货号" type="text"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-8">
+                                <label class="col-sm-4 control-label">商品分类：</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-6">
+                                        <select class="input-sm form-control input-s-sm inline" id="search_type_1">
+                                            <option value="" selected="selected">选择一级分类</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="input-sm form-control input-s-sm inline" id="search_type_2">
+                                            <option value="" selected="selected">选择二级分类</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="" id="search_type" name="search_type">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">商品品牌：</label>
+                                <div class="col-sm-7">
+                                    <select class="input-sm form-control input-s-sm inline" id="search_brand">
+                                        <option value="" selected="selected">选择品牌</option>
+                                        <option value="1">afafaf</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <button class="btn btn-white btn-outline" type="button" id="btnSearch">查询</button>
+                            </div>
+                            <div class="form-group col-sm-7">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <button class="btn btn-white btn-outline" data-toggle="modal" data-target="/"
+                                    type="button">添加
+                            </button>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="select_status">
+                                <option value="" selected="selected">选择上下架</option>
+                                <option value="1">上架</option>
+                                <option value="0">下架</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <div class="checkbox checkbox-inline i-checks">
+                                            <label>
+                                                <input type="checkbox" data-oper="goods" value="0">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>编号</th>
+                            <th>商品图片</th>
+                            <th>商品名称</th>
+                            <th>价格/货号</th>
+                            <th>标签</th>
+                            <th>上架</th>
+                            <th>排序</th>
+                            <th>SKU库存</th>
+                            <th>销量</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">删除商品</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该商品
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="editSoreModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">编辑库存</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="editStoreForm">
+                        <input type="hidden" id="edit_store_id" name="edit_store_id" value="0">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>库存数量：</label>
+                            <div class="col-sm-8">
+                                <input id="edid_store" name="edid_store" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnEditStore" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal fade" id="detailModeal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">商品详情</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="detailForm">
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品名称：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="name"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">副标题：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="sub_title"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品分类：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="type_name"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品品牌：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="brand_name"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商品介绍：</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static" id="introduce"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品货号：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="goods_no"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品售价：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="selling_price"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">市场价：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="market_price"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品库存：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="store"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">库存预警值：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="store_alarm_value"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">计量单位：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="unit"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">商品重量：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="weight"></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="col-lg-4 control-label">详细页标题：</label>
+                            <div class="col-lg-8">
+                                <p class="form-control-static" id="detail_title"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">详细页描述：</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static" id="detail_introduce"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商品关键词：</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static" id="keyword"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商品备注：</label>
+                            <div class="col-lg-10">
+                                <p class="form-control-static" id="remark"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (element) {
+                    element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: "span",
+                errorClass: "help-block m-b-none",
+                validClass: "help-block m-b-none"
+            });
+            $.goods = {
+                init: function () {
+                    var _self = this;
+                    this.getData();
+                    $('#btnEditStore').off().on('click', function () {
+                        _self.edit_store();
+                    });
+                    $.request("/goods_type/data", {}, function (res) {
+                        if (res.success) {
+                            var html = ['<option value="" selected="selected">选择一级分类</option>'];
+                            for (var i in res.data) {
+                                var item = res.data[i];
+                                var sub = encodeURIComponent(JSON.stringify(item.sub));
+                                html.push('<option data-sub="' + sub + '" value="' + item.id + '">' + item.name + '</option>')
+                            }
+                            $('#search_type_1').html(html.join(""));
+                            $('#search_type_1').on('change', function () {
+                                var sub = ['<option value="" selected="selected">选择二级分类</option>'];
+                                var subText = decodeURIComponent($(this).find('option:selected').data('sub'));
+                                if ($(this).val()) {
+                                    var subData = JSON.parse(subText);
+                                    for (var i in subData) {
+                                        var item = subData[i];
+                                        sub.push('<option value="' + item.id + '">' + item.name + '</option>')
+                                    }
+                                    $('#search_type').val($(this).val() + '/');
+                                    $('#search_type_2').html(sub.join(""));
+                                    $('#search_type_2').on('change', function () {
+                                        if ($(this).val()) {
+                                            $('#search_type').val($('#search_type_1').val() + "/" + $(this).val());
+                                        } else {
+                                            $('#search_type').val('');
+                                        }
+                                    });
+                                }
+                                else {
+                                    $('#search_type').val('');
+                                }
+                            });
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/goods/goods_data",
+                            dataSrc: 'data',
+                            data: function (d) {
+                                var param = {};
+                                param.draw = d.draw;
+                                param.start = d.start;
+                                param.length = d.length;
+                                param.search_id = $('#search_id').val() || "";
+                                param.search_type = $('#search_type').val() || "";
+                                param.search_brand = $('#search_brand').val() || "";
+                                param.select_status = $('#select_status').val() || "";
+                                return param;
+                            }
+                        },
+                        columns: [
+                            {
+                                data: "null",
+                                render: function (data, type, row, meta) {
+                                    var html = ' <div class="form-group"> <div class="col-sm-10"> <div class="checkbox checkbox-inline i-checks"> <label> <input type="checkbox" data-oper="goods" value="0"> </label> </div> </div> </div>';
+                                    return html;
+                                }
+                            },
+                            {data: "id"},
+                            {
+                                data: "img",
+                                render: function (data, type, row, meta) {
+                                    var url = '/content/img/default.png';
+                                    if (row.img) {
+                                        url = row.img;
+                                    }
+                                    return ' <img class="message-avatar" src="' + url + '" alt="">'
+                                }
+                            },
+                            {data: "name"},
+                            {
+                                data: "null",
+                                render: function (data, type, row, meta) {
+                                    return row.selling_price + "/" + row.goods_no;
+                                }
+                            },
+                            {
+                                data: "label",
+                                render: function (data, type, row, meta) {
+
+                                    return data;
+                                }
+                            },
+                            {
+                                data: "status",
+                                render: function (data, type, row, meta) {
+                                    var html = '<input data-oper="status" name="' + row.id + '" data-id="' + row.id + '" type="checkbox" class="js-switch" ' + (data == 0 ? "" : "checked") + '  />';
+                                    return html;
+                                }
+                            },
+                            {data: "id"},
+                            {
+                                data: "store",
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    html.push('<a data-id="' + row.id + '" data-store="' + data + '"  data-toggle="modal" data-target="#editSoreModeal" data-oper="edit_store" href="#">' + data + '/编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    return html.join('');
+                                }
+                            },
+                            {data: "selling_count"},
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#detailModeal" data-oper="detail" href="#">查看</a>&nbsp;&nbsp;&nbsp;');
+                                    html.push('<a data-id="' + row.id + '"  data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#deleteModal" data-oper="delete" href="#">删除</a>');
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('input[data-oper="status"]'));
+                            elems.forEach(function (html) {
+                                var switchery = new Switchery(html);
+                                html.onchange = function () {
+                                    _self.enable($(this));
+                                }
+                            });
+                            $('.i-checks').iCheck({
+                                handle: 'checkbox',
+                                checkboxClass: 'icheckbox_square-green',
+                                radioClass: 'iradio_square-green',
+                            });
+
+                            $('a[data-oper="detail"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.detail(id);
+                            });
+
+                            $('a[data-oper="edit_store"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var store = $(this).data('store');
+                                _self.edit_store(id, store);
+                            });
+
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                $.jump("/goods/save?id=" + id);
+                            });
+                            $('a[data-oper="log"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                            });
+                            $('a[data-oper="delete"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.delete(id);
+                            });
+
+                            $('#length').off().on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#select_status').off().on('change', function () {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#btnSearch').off().on('click', function () {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+                edit_store: function (id, s) {
+                    var _self = this;
+                    $('#edit_store_id').val(id);
+                    $('#edid_store').val(s);
+                    $('#btnEditStore').off().on('click', function () {
+                        var val = $("#editStoreForm").validate({
+                            rules: {
+                                edid_store: {
+                                    required: true,
+                                    number: true
+                                }
+                            },
+                            messages: {
+                                edid_store: {
+                                    required: "请输入库存",
+                                    number: "请输入合法的数字"
+                                }
+                            }
+                        });
+                        if (val.form()) {
+                            var data = $("#editStoreForm").formToObj();
+                            var param = {
+                                id: data.edit_store_id,
+                                store: data.edid_store
+                            };
+                            $.request('/goods/save_store', param, function (res) {
+                                if (res.success) {
+                                    if (_self.table) {
+                                        _self.table.ajax.reload();
+                                    }
+                                    toastr.success("商品管理", res.msg);
+                                }
+                                else {
+                                    toastr.error("商品管理", res.msg);
+                                }
+                                $('#editStoreForm').resetForm();
+                                $('#editSoreModeal').modal('hide');
+                            });
+                        }
+                    });
+                },
+                delete: function (id) {
+                    var _self = this;
+                    $('#btnConfirmDelete').off().on('click', function () {
+                        $.request('/goods/delete_goods', {id: id}, function (res) {
+                            if (res.success) {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                                toastr.success("删除商品", res.msg);
+                            }
+                            else {
+                                toastr.error("删除商品", res.msg);
+                            }
+                            $('#deleteModal').modal('hide');
+                        });
+                    });
+                },
+                detail: function (id) {
+                    $.getJSON('/goods/get_goods', {id: id}, function (res) {
+                        if (res.success) {
+                            $('#detailForm').ObjToHtml(res.data, 'p');
+                        }
+                    });
+                },
+                enable: function (obj) {
+                    var id = parseInt(obj.attr('name'));
+                    var enable = obj.prop('checked') == true ? 1 : 0;
+                    var _self = this;
+                    $.request('/goods/save_status', {id: id, status: enable}, function (res) {
+                        if (res.success) {
+                            toastr.success("商品管理", res.msg);
+                        }
+                        else {
+                            toastr.error("商品管理", res.msg);
+                        }
+                    });
+                }
+            }
+            $(function () {
+                $.goods.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

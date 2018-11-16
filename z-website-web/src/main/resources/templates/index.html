@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/contactstyle.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/faqstyle.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/single.css" rel="stylesheet" type="text/css" />
+    <link href="/css/medile.css" rel="stylesheet" type="text/css" />
+    <link href="/css/usercenter.css" rel="stylesheet" type="text/css" />
+    <link href="/css/jquery.slidey.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet"  />
+    <link href="/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+    <link href="/css/owl.theme.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/move-top.js"></script>
+    <script type="text/javascript" src="/js/jquery.validationEngine-zh_CN.js"></script>
+    <script type="text/javascript" src="/js/jquery.validationEngine.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="w3layouts_logo">
+                <a href="/">
+                    <h1>
+                        张工精确
+                    </h1>
+                </a>
+            </div>
+            <div class="w3_search">
+                <form action="#" method="post">
+                    <input type="text" name="Search" placeholder="产品报价" required="">
+                    <input type="submit" value="我要询价">
+                </form>
+            </div>
+            <div class="w3l_sign_in_register">
+                <ul>
+                    <li>
+                        <a id="topBtnLogin" href="javascript:;" data-toggle="modal" data-target="#myModal">登录 / 注册</a>
+                        <a id="topBtnUC" href="/usercenter/index" style="display: none">个人中心</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="modal video-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    登录 & 注册
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="w3_login_module">
+                            <div class="module form-module">
+                                <div class="toggle">
+                                    <i class="fa fa-times fa-pencil"></i>
+                                    <div class="tooltip">点击切换</div>
+                                </div>
+                                <div class="form formToggle">
+                                    <h3 class="login_msg">登录账户</h3>
+                                    <!-- <form method="post"> -->
+                                    <input type="text" id="login_u" name="Username" placeholder="请输入用户名" maxlength="12">
+                                    <input type="password" id="login_p" name="Password" placeholder="请输入登录密码" maxlength="8">
+                                    <input type="submit" value="登录" onclick="dpy.Login.Login()">
+                                    <!-- </form> -->
+                                </div>
+                                <div class="form formToggle">
+                                    <h3 class="login_msg">注册新账户</h3>
+                                    <!-- <form action="#" method="post"> -->
+                                    <input type="text" id="reg_u" name="Username" placeholder="请输入用户名" maxlength="12">
+                                    <input type="password" id="reg_p" name="Password" placeholder="请输入6-8位登录密码"
+                                           maxlength="8">
+                                    <input type="password" id="reg_rp" name="Password" placeholder="请再次输入登录密码"
+                                           maxlength="8">
+                                    <input type="email" id="reg_email" name="Email" placeholder="请输入邮箱">
+                                    <input type="text" id="reg_phone" name="Username" placeholder="请输入手机号" maxlength="11">
+                                    <div style="position:relative;">
+                                        <input type="text" id="reg_code" name="Phone" placeholder="请输入手机验证码" maxlength="6">
+                                        <i class="getIdenCode" onclick="dpy.Login.getPhoneCode()">获取验证码</i>
+                                    </div>
+                                    <input type="submit" value="注册" onclick="dpy.Login.Register()">
+                                    <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal video-modal fade" id="forgetPassWordModal" tabindex="-1" role="dialog" aria-labelledby="forgetPassWordModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    重置密码
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="w3_login_module">
+                            <div class="module form-module">
+                                <div class="form" style="display:block!important;">
+                                    <h3>找回密码</h3>
+                                    <form action="#" method="post">
+                                        <input type="text" name="Username" placeholder="请输入用户名" required="">
+                                        <input type="password" name="Password" placeholder="请设置登录密码" required="">
+                                        <input type="password" name="Password" placeholder="请确认登录密码" required="">
+                                        <input type="email" name="Email" placeholder="请输入邮箱" required="">
+                                        <input type="text" name="Phone" placeholder="请输入手机号码" required="">
+                                        <div style="position:relative;">
+                                            <input type="text" name="Phone" placeholder="请输入手机验证码" required="">
+                                            <i class="getIdenCode">获取验证码</i>
+                                        </div>
+                                        <input type="submit" value="重置密码">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal video-modal fade" id="regiVipModal" tabindex="-1" role="dialog" aria-labelledby="regiVipModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    注册新账户
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="w3_login_module">
+                            <div class="module form-module">
+                                <div class="form" style="display:block!important;">
+                                    <h3>注册新账户</h3>
+                                    <form action="#" method="post">
+                                        <input type="text" name="Username" placeholder="请输入用户名" required="">
+                                        <input type="password" name="Password" placeholder="请设置登录密码" required="">
+                                        <input type="password" name="Password" placeholder="请确认登录密码" required="">
+                                        <input type="email" name="Email" placeholder="请输入邮箱" required="">
+                                        <input type="text" name="Phone" placeholder="请输入手机号码" required="">
+                                        <div style="position:relative;">
+                                            <input type="text" name="Phone" placeholder="请输入手机验证码" required="">
+                                            <i class="getIdenCode">获取验证码</i>
+                                        </div>
+                                        <input type="submit" value="注册">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="movies_nav">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <!-- 如果屏幕小于767，这个菜单就会生效 -->
+                <div class="navbar-header navbar-left">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- 如果屏幕小于767，这个菜单就会生效 -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                    <!-- <nav> -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">首页</a></li>
+                        <li><a href="/pages/tg.html">技术指南</a></li>
+                        <li><a href="/pages/form/yixingCost.html">人工报价</a></li>
+                        <li><a href="/pages/proList.html">产品展示</a></li>
+                        <li><a href="/pages/aboutUs.html">关于我们</a></li>
+                    </ul>
+                    <!-- </nav> -->
+                    <script>
+                        $(function () {
+                            let hrefs = ['/', '/tg', '/form/yixing', '/proList', '/aboutUs']
+                            let index = hrefs.indexOf(location.pathname)
+                            if (index >= 0) {
+                                $('.nav.navbar-nav li').eq(index).addClass('active')
+                            }
+
+                            dpy.Login.getUserinfo()
+                        })
+                    </script>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <script>
+        $('.toggle').click(function () {
+            // Switches the Icon
+            $(this).children('i').toggleClass('fa-pencil');
+            // Switches the forms
+            $('.formToggle').animate({
+                height: "toggle",
+                'padding-top': 'toggle',
+                'padding-bottom': 'toggle',
+                opacity: "toggle"
+            }, "slow");
+        });
+    </script>
+
+    <!------------------------------------------------------------------------------------------------------------------>
+    <script type="text/javascript" src="/js/template-web.js"></script>
+    <script type="text/javascript" src="/js/jquery.slidey.js"></script>
+    <script type="text/javascript" src="/js/owl.carousel.js"></script>
+    <script type="text/javascript" src="/js/jquery.dotdotdot.min.js"></script>
+    <script type="text/javascript">
+        let topList = [],proList = [], aiList = [], lastList = [];
+        $.getJSON("http://www.zhangongjx.com/api/goods_data", {}, function (res) {
+            if (res.success) {
+                $.each(res.data,function (i,item) {
+                    switch (item.position){
+                        case 1: topList.push(item); break;
+                        case 2: proList.push(item); break;
+                        case 3: aiList.length < 4 && aiList.push(item); break;
+                        case 4: lastList.push(item); break;
+                    }
+                });
+                var data = {
+                    list: topList
+                };
+                var html = template('test', data);
+                document.getElementById('slidey').innerHTML = html;
+                //大banner右侧的小指示条
+                $("#slidey").slidey({
+                    interval: 8000,
+                    listCount: 4,
+                    autoPlay: false,
+                    showList: true
+                });
+//                $(".slidey-list-description").dotdotdot();
+                var proListData = {
+                    list: proList
+                };
+                var htmlProListData = template('proListData', proListData);
+                document.getElementById('owl-demo').innerHTML = htmlProListData;
+                $('#owl-demo').owlCarousel({
+                    autoPlay: 3000, //Set AutoPlay to 3 seconds
+                    items: 4,
+                    itemsDesktop: [1100, 4],
+                    itemsDesktopSmall: [414, 3],
+                    pagination:false,
+                    stopOnHover: true
+                });
+
+                var aiListData = {
+                    list:aiList
+                };
+                var htmlAiListData = template('aiListData', aiListData);
+                document.getElementById('htmlAiListData').innerHTML = htmlAiListData;
+                $('#htmlAiListData').owlCarousel({
+                    autoPlay: 3000, //Set AutoPlay to 3 seconds
+                    items: 4,
+                    itemsDesktop: [1100, 4],
+                    itemsDesktopSmall: [414, 3],
+                    pagination:false,
+                    stopOnHover: true
+                });
+
+                var lastListData = {
+                    list:lastList
+                };
+                var htmlLastListData = template('lastListData', lastListData);
+                document.getElementById('htmlLastListData').innerHTML = htmlLastListData;
+                $('#htmlLastListData').owlCarousel({
+                    autoPlay: 3000, //Set AutoPlay to 3 seconds
+                    items: 4,
+                    itemsDesktop: [1100, 4],
+                    itemsDesktopSmall: [414, 3],
+                    pagination:false,
+                    stopOnHover: true
+                });
+            }
+        });
+    </script>
+    <!-- banner -->
+    <div id="slidey" style="display:none;"></div>
+    <script id="test" type="text/html">
+        <ul>
+            {{each list value i}}
+            <li>
+                <img src="{{value.img}}" alt=" ">
+                <p class='title'><a href="{{value.url}}" style="color: #fff">{{value.name}}</a></p>
+                <p class='description'>{{value.remark}}</p>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+    <!-- //banner 产品展示职能报价-->
+    <script id="proListData" type="text/html">
+        {{each list value i}}
+            <div class="items">
+                <div class="w3l-movie-gride-agile w3l-movie-gride-agile1">
+                    <a href="{{value.url}}" class="hvr-shutter-out-horizontal">
+                        <img src="{{value.img}}"  class="img-responsive"  style="width: 190px; height: 154px;"/>
+                        <div class="w3l-action-icon">
+                            {{value.remark}}
+                        </div>
+                    </a>
+                    <div class="w3l-movie-text">
+                        <h6>
+                            <a href="{{value.url}}">{{value.name}}</a>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </script>
+        <!-- banner-bottom产品展示       -->
+        <div >
+            <h4 class="latest-text w3_latest_text">产品展示</h4>
+            <div class="container">
+                <div class="w3_agile_banner_bottom_grid">
+                    <div id="owl-demo" class="owl-carousel owl-theme"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 产品展示-->
+        <!-- 智能报价 -->
+    <script id="aiListData" type="text/html">
+        {{each list value i}}
+        <div class="w3l-movie-gride-agile" style="padding-top: 20px;">
+            <a href="{{value.url}}" class="hvr-shutter-out-horizontal">
+                <img src="{{value.img}}" class="img-responsive" alt=" " style="width: 190px; height: 154px;" />
+                <div class="w3l-action-icon">
+                    <p style="margin-top:2em;">
+                        {{value.name}}
+                    </p>
+                    <p>
+                        {{value.remark}}
+                    </p>
+                </div>
+            </a>
+            <div class="mid-1 agileits_w3layouts_mid_1_home">
+                <div class="w3l-movie-text">
+                    <h6>
+                        <a href="{{value.url}}">{{value.name}}</a>
+                    </h6>
+                </div>
+                <div class="mid-2 agile_mid_2_home">
+                    <p>
+                        {{value.remark}}
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+        <div class="general">
+            <h4 class="latest-text w3_latest_text">智能报价</h4>
+            <div class="container">
+                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                    <div id="myTabContent" class="tab-content">
+                        <div id="htmlAiListData" class="w3_agile_featured_movies" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 智能报价 -->
+        <!-- banner-bottom 我们的工厂-->
+    <script id="lastListData" type="text/html">
+        {{each list value i}}
+        <div class="item">
+            <a href="{{value.url}}">
+                <img src="{{value.img}}" class="img-responsive" title="{{value.name}}" style="width: 190px; height: 154px;" />
+            </a>
+        </div>
+        {{/each}}
+    </script>
+    <div class="general">
+        <h4 class="latest-text w3_latest_text">我们的工厂</h4>
+        <div class="container">
+            <div class="w3_agile_banner_bottom_grid">
+                <div id="htmlLastListData" class="owl-carousel owl-theme"></div>
+            </div>
+        </div>
+    </div>
+    <!-- //banner-bottom 我们的工厂-->
+        <div class="banner-bottom">
+            <div class="adBox container">
+                <img src="/images/ad.png" alt="">
+            </div>
+            <div class="container">
+                <div class="VIPbox">
+                    <h4></h4>
+                    <ul>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>搜索
+                                    <span>历史</span>
+                                </p>
+                                <p>文件保存</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>配备
+                                    <span>专业</span>
+                                </p>
+                                <p>工艺技术人员</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>设计
+                                    <span>技术</span>
+                                </p>
+                                <p>随时支持</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>快速
+                                    <span>报价</span>
+                                </p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>
+                                    <span>加急</span>
+                                    订单
+                                </p>
+                                <p>优先处理</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>
+                                    <span>图纸</span>
+                                </p>
+                                <p>二次审核</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>
+                                    <span>图纸技术</span>
+                                </p>
+                                <p>要求优化</p>
+                            </div>
+                        </li>
+                        <li>
+                            <p></p>
+                            <div>
+                                <p>
+                                    <span>张工会员</span>可申请产品
+                                </p>
+                                <p>
+                                    加工完成后试组装，如试组装中发现问题我们将免费为您改善
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="immiRegi">
+                <input type="button" value="免费会员注册" data-toggle="modal" data-target="#regiVipModal">
+            </div>
+        </div>
+    </div>
+
+
+    <script type='text/javascript' src='/js/index.js'></script>
+    <!------------------------------------------------------------------------------------------------------------------>
+
+    <div class="footer">
+        <div class="container">
+            <div class="w3ls_footer_grid">
+                <div class="col-md-12 w3ls_footer_grid_left">
+                    <div class="w3ls_footer_grid_left1">
+                        <h2>联系我们</h2>
+                        <p>
+                            业务受理时间：8：00-18：00（周一~周五，不包含法定节假日）
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="col-md-12 w3ls_footer_grid1_left">
+                <p>
+                    人工询价、订货、公司信息变更相关
+                </p>
+                <p>
+                    服务电话：18600000000 &nbsp;&nbsp;/&nbsp;&nbsp; 服务邮箱：798899408@qq.com &nbsp;&nbsp;/&nbsp;&nbsp;
+                    商品技术咨询：786655657（微信/QQ）
+                </p>
+                <p>
+                    版权所有 . 张工精确 京 ICP 备14012994 号 -1
+                </p>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        筛选条件
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">广告名称：</label>
+                                <div class="col-sm-7">
+                                    <input id="search_name" name="search_name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">广告位置：</label>
+                                <div class="col-sm-7">
+                                    <select id="search_position" name="search_position" class="form-control">
+                                        <option value="0" selected>请选择</option>
+                                        <option value="1">首页顶部轮播</option>
+                                        <option value="2">产品展示</option>
+                                        <option value="3">智能报价</option>
+                                        <option value="4">我们的工厂</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="col-sm-5 control-label">到期时间：</label>
+                                <div class="col-sm-7">
+                                    <select id="search_date" name="search_date" class="form-control">
+                                        <option value="0" selected>请选择</option>
+                                        <option value="1">一天内</option>
+                                        <option value="3">三天内</option>
+                                        <option value="7">一周内</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <button class="btn btn-white btn-outline" type="button" id="btnSearch">查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <button class="btn btn-white btn-outline" data-toggle="modal" data-target="#addModal"
+                                    type="button">添加广告
+                            </button>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <div class="checkbox checkbox-inline i-checks">
+                                            <label>
+                                                <input type="checkbox" data-oper="gallary" value="0">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>编号</th>
+                            <th>广告名称</th>
+                            <th>广告位置</th>
+                            <th>广告图片</th>
+                            <th>时间</th>
+                            <th>上线/下线</th>
+                            <th>点击次数</th>
+                            <th>生成订单</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addTitle">添加广告</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="gallaryForm">
+                        <input type="hidden" value="0" id="id" name="id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>广告名称：</label>
+                            <div class="col-sm-8">
+                                <input id="name" name="name" type="text" class="form-control">
+                                <span class="help-block m-b-none">广告名称只是作为辨别多个广告条目之用，并不显示在广告中</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>广告位置：</label>
+                            <div class="col-sm-8">
+                                <select id="position" name="position" class="form-control">
+                                    <option value="">请选择</option>
+                                    <option value="1">顶部轮播</option>
+                                    <option value="2">产品展示</option>
+                                    <option value="3">智能报价</option>
+                                    <option value="4">我们的工厂</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>开始时间：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date form_datetime" data-date=""
+                                     data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="start_at">
+                                    <input class="form-control" id="read_start_at" size="16" type="text" value=""
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="start_at" name="start_at" value=""/><br/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>到期时间：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date form_datetime" data-date=""
+                                     data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="end_at">
+                                    <input class="form-control" id="read_end_at" size="16" type="text" value=""
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="end_at" name="end_at" value=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">上线/下线：</label>
+                            <div class="col-sm-8">
+                                <input type="checkbox" id="status" name="status" value="1" checked>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>广告图片：</label>
+                            <div class="col-sm-8">
+                                <input type="hidden" id="img" name="img" value="">
+                                <div class="input-group">
+                                    <p class="form-control-static">
+                                        <img class="message-avatar" id="upload_img" src="/content/img/default.png"
+                                             alt="">
+                                    </p>
+                                    <span class="input-group-btn">
+                                        <label class="btn btn-primary" for="file">选择文件</label>
+                                        <button class="btn btn-primary" type="button" id="btnUpload"
+                                                style="margin-left: 10px;">上传</button>
+                                    </span>
+                                </div>
+                                <span class="help-block m-b-none">只能上传jpg/png格式文件，文件不能超过50kb</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>广告链接：</label>
+                            <div class="col-sm-8">
+                                <input id="url" name="url" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">广告备注：</label>
+                            <div class="col-sm-8">
+                                <textarea id="remark" name="remark" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();">关闭
+                    </button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">删除广告</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该广告
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="uploadFile" method="post" action="/upload_file" style="display: none;" enctype="multipart/form-data">
+        <input type="file" id="file" name="file" accept="image/*">
+        <input type="hidden" id="key" name="key" value="ad">
+    </form>
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- Data picker -->
+    <script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.gallary = {
+                init: function () {
+                    var _self = this;
+                    this.val();
+                    this.getData();
+                    this.init_uploader();
+                    $('#btnSubmit').off().on('click', function () {
+                        if (_self.val().form()) {
+                            _self.submit();
+                        }
+                    });
+                    $.validator.setDefaults({
+                        highlight: function (element) {
+                            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                        },
+                        success: function (element) {
+                            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                        },
+                        errorElement: "span",
+                        errorClass: "help-block m-b-none",
+                        validClass: "help-block m-b-none"
+                    });
+                    $('.form_datetime').datetimepicker({
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        forceParse: 0,
+                        showMeridian: 1
+                    });
+                    var elem = document.querySelector('#status');
+                    var switchery = new Switchery(elem);
+                    elem.onchange = function () {
+                        var v = $(this).prop("checked") == true ? 1 : 0;
+                        $(this).val(v);
+                    };
+                },
+                init_uploader: function () {
+                    $.file_upload({
+                        file: "#file",
+                        img: "#upload_img",
+                        size: 500,
+                        upload: "#btnUpload",
+                        form: "#uploadFile",
+                        success: function (res) {
+                            if (res.success) {
+                                toastr.success("文件上传", res.msg);
+                                var data = res.data;
+                                $('#img').val(data.url);
+                            } else {
+                                toastr.error("文件上传", res.msg);
+                            }
+                        }
+                    });
+                },
+                submit: function () {
+                    var _self = this;
+                    var data = $("#gallaryForm").formToObj();
+                    var titel = "修改广告"
+                    if (data.id == 0) {
+                        titel = "添加广告"
+                    }
+                    $.request("/conf/save_ad", data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success(titel, res.msg);
+                            $("#gallaryForm").resetForm();
+                            $('#addModal').modal('hide');
+                        }
+                        else {
+                            toastr.error(titel, res.msg);
+                        }
+                    });
+                },
+                val: function () {
+                    return $("#gallaryForm").validate({
+                        ignore: [],
+                        rules: {
+                            name: "required",
+                            position: {
+                                required: true,
+                                min: 1
+                            },
+                            start_at: "required",
+                            end_at: "required",
+                            img: "required",
+                            url: "required"
+                        },
+                        messages: {
+                            name: "请输入广告名称",
+                            position: {
+                                required: "请选择广告位置",
+                                min: "请选择广告位置"
+                            },
+                            start_at: "请选择开始时间",
+                            end_at: "请选择到期时间",
+                            img: "请选择广告图片",
+                            url: "请输入广告链接"
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    //var query='?search_name='+$('#search_name').val()+'&search_position='+$('#search_position').val()+'&search_date='+$('#search_date').val();
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/conf/ad_data",
+                            dataSrc: 'data',
+                            data: function (d) {
+                                var param = {};
+                                param.draw = d.draw;
+                                param.start = d.start;
+                                param.length = d.length;
+                                param.search_name = $('#search_name').val();
+                                param.search_position = $('#search_position').val();
+                                param.search_date = $('#search_date').val();
+                                return param;
+                            }
+                        },
+                        columns: [
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = ' <div class="form-group"> <div class="col-sm-10"> <div class="checkbox checkbox-inline i-checks"> <label> <input type="checkbox" data-oper="gallary" value="0"> </label> </div> </div> </div>';
+                                    return html;
+                                }
+                            },
+                            {data: "id"},
+                            {data: "name"},
+                            {
+                                data: "position",
+                                render: function (data, type, row, meta) {
+                                    var text = "";
+                                    switch (data) {
+                                        case 1:
+                                            text = "顶部轮播";
+                                            break;
+                                        case 2:
+                                            text = "产品展示";
+                                            break;
+                                        case 3:
+                                            text = "智能报价";
+                                            break;
+                                        case 4:
+                                            text = "我们的工厂";
+                                            break;
+                                        default:
+                                            text = "默认";
+                                            break;
+                                    }
+                                    return text;
+                                }
+                            },
+                            {
+                                data: "img",
+                                render: function (data, type, row, meta) {
+                                    var url = '/content/img/default.png';
+                                    if (row.img) {
+                                        url = row.img;
+                                    }
+                                    return ' <img class="message-avatar" src="' + url + '" alt="">'
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return row.start_at + "至" + row.end_at;
+                                }
+                            },
+                            {
+                                data: "status",
+                                render: function (data, type, row, meta) {
+                                    var html = '<input data-oper="status" name="' + row.id + '" data-id="' + row.id + '" type="checkbox" class="js-switch" ' + (data == 0 ? "" : "checked") + '  />';
+                                    return html;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return 0;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    return 0;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    var json = encodeURIComponent(JSON.stringify(row));
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-json="' + json + '" data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-json="' + json + '" data-oper="top" href="#">置顶</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#deleteModal" data-oper="delete" href="#">删除</a>');
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            $('.i-checks').iCheck({
+                                handle: 'checkbox',
+                                checkboxClass: 'icheckbox_square-green',
+                                radioClass: 'iradio_square-green',
+                            });
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('input[data-oper="status"]'));
+                            elems.forEach(function (html) {
+                                var switchery = new Switchery(html);
+                                html.onchange = function () {
+                                    _self.enable($(this));
+                                }
+                            });
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var json = $(this).data('json');
+                                _self.edit(id, json);
+                            });
+                            $('a[data-oper="delete"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.delete(id);
+                            });
+
+                            $('#length').on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                            $('#btnSearch').off().on('click', function () {
+                                var index = $("#length").val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+                delete: function (id) {
+                    var _self = this;
+                    $('#btnConfirmDelete').off().on('click', function () {
+                        $.request('/conf/delete_ad', {id: id}, function (res) {
+                            if (res.success) {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                                toastr.success("删除广告", res.msg);
+                            }
+                            else {
+                                toastr.error("删除广告", res.msg);
+                            }
+                            $('#deleteModal').modal('hide');
+                        });
+                    });
+                },
+                edit: function (id, json) {
+                    var data = JSON.parse(decodeURIComponent(json));
+                    $("#gallaryForm").ObjToForm(data);
+                    $('#read_end_at').val(data.end_at);
+                    $('#read_start_at').val(data.start_at);
+                    $('#upload_img').attr('src', data.img);
+                    $('#addTitle').text('修改广告');
+                },
+                enable: function (obj) {
+                    var id = parseInt(obj.attr('name'));
+                    var status = obj.prop('checked') == true ? 1 : 0;
+                    var _self = this;
+                    $.request('/conf/enable_ad', {id: id, status: status}, function (res) {
+                        if (res.success) {
+                            toastr.success("广告上下架", res.msg);
+                        }
+                        else {
+                            toastr.error("广告上下架", res.msg);
+                        }
+                    });
+                }
+            }
+            $(function () {
+                $.gallary.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

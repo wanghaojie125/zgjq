@@ -1,0 +1,280 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-11 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <button class="btn btn-white btn-outline" data-toggle="modal" data-target="#addModal"
+                                    type="button">添加
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>名称</th>
+                            <th>比重</th>
+                            <th>单价(元/Kg）</th>
+                            <th>更新日期</th>
+                            <th>操作记录</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>计算公式</h5>
+                </div>
+                <div class="ibox-content">
+                    <h5>平板计算</h5>
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>长</th>
+                            <th>计算符号</th>
+                            <th>宽</th>
+                            <th>计算符号</th>
+                            <th>高</th>
+                            <th>计算符号</th>
+                            <th>比重</th>
+                            <th>计算符号</th>
+                            <th>系数</th>
+                            <th>结果</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ibox-content">
+                    <h5>圆棒计算</h5>
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>直径</th>
+                            <th>计算符号</th>
+                            <th>高</th>
+                            <th>计算符号</th>
+                            <th>系数π</th>
+                            <th>计算符号</th>
+                            <th>比重</th>
+                            <th>计算符号</th>
+                            <th>系数</th>
+                            <th>结果</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td>3.1415926</td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td><i class="fa fa-asterisk"></i></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="$('#gallaryForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addTitle">添加</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="gallaryForm">
+                        <input type="hidden" value="0" id="id" name="id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>名称：</label>
+                            <div class="col-sm-8">
+                                <input id="name" name="name" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>比重：</label>
+                            <div class="col-sm-8">
+                                <input id="sg" name="sg" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>单价(元/Kg）：</label>
+                            <div class="col-sm-8">
+                                <input id="price" name="price" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#gallaryForm').resetForm();">关闭
+                    </button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+
+    <script type="text/javascript">
+        (function ($) {
+            $.gallary = {
+                init: function () {
+                    var _self = this;
+                    this.val();
+                    this.getData();
+                    $('#btnSubmit').off().on('click', function () {
+                        if (_self.val().form()) {
+                            _self.submit();
+                        }
+                    });
+                },
+                submit: function () {
+                    var _self = this;
+                    var data = $("#gallaryForm").formToObj();
+                    var titel = "修改"
+                    if (data.id == 0) {
+                        titel = "添加"
+                    }
+                    $.request("/data/save_materials", data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success(titel, res.msg);
+                            $("#userForm").resetForm();
+                            $('#addModal').modal('hide');
+                        }
+                        else {
+                            toastr.error(titel, res.msg);
+                        }
+                    });
+                },
+                val: function () {
+                    return $("#gallaryForm").validate({
+                        rules: {
+                            name: "required",
+                            sg: "required",
+                            price:{
+                                required:true,
+                                number:true
+                            }
+                        },
+                        messages: {
+                            name: "请输入名称",
+                            sg: "请输入比重",
+                            price:{
+                                required:"请输入单价",
+                                number:"请输入合法的单价"
+                            }
+                        }
+                    });
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/data/materials_data",
+                            dataSrc: 'data'
+                        },
+                        columns: [
+                            {data: "id"},
+                            {data: "name"},
+                            {
+                                data: "sg",
+                            },
+                            {data: "price"},
+                            {data: "update_at"},
+                            {
+                                data: "oper_name",
+                                render: function (data, type, row, meta) {
+                                    return "编辑会员账号:"+data;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    var json=encodeURIComponent(JSON.stringify(row));
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-json="'+json+'" data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                var json=$(this).data('json');
+                                _self.edit(id,json);
+                            });
+                        }
+                    });
+                },
+                edit: function (id,json) {
+                     var data=JSON.parse(decodeURIComponent(json));
+                    $("#gallaryForm").ObjToForm(data);
+                    $('#addTitle').text('修改');
+                },
+            }
+            $(function () {
+                $.gallary.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

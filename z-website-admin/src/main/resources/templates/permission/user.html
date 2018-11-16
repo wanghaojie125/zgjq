@@ -1,0 +1,473 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <div class="col-sm-1 m-b-xs">
+                            <button class="btn btn-white btn-outline" data-toggle="modal" data-target="#addModal"
+                                    type="button">添加
+                            </button>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>成员账号</th>
+                            <th>姓名</th>
+                            <th>邮箱地址</th>
+                            <th>所属部门</th>
+                            <th>添加时间</th>
+                            <th>最后登录</th>
+                            <th>是否启用</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="$('#userForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addTitle">添加成员</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="userForm" method="post" action="/permission/save_user">
+                        <input type="hidden" value="0" id="id" name="id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>成员名称：</label>
+                            <div class="col-sm-8">
+                                <input id="username" name="username" type="text" class="form-control"
+                                       placeholder="请输入成员名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>成员姓名：</label>
+                            <div class="col-sm-8">
+                                <input id="realname" name="realname" type="text" class="form-control"
+                                       placeholder="请输入成员姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>邮箱地址：</label>
+                            <div class="col-sm-8">
+                                <input id="email" name="email" type="text" class="form-control"
+                                       placeholder="请输入邮箱地址">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>所属部门：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control m-b" id="dep_id" name="dep_id">
+
+                                </select>
+                            <span class="help-block m-b-none">选择所属部门后默认继承部门权限，可在成员列表中单独设置权限</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>登录密码：</label>
+                            <div class="col-sm-8">
+                                <input id="pwd" name="pwd" type="password" class="form-control"
+                                       placeholder="请输入登录密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"><span style="color:red;">*</span>确认密码：</label>
+                            <div class="col-sm-8">
+                                <input id="confirmpwd" name="confirmpwd" type="password" class="form-control"
+                                       placeholder="请输入确认密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注信息：</label>
+                            <div class="col-sm-8">
+                                <textarea id="remark" name="remark" class="form-control"
+                                          placeholder="请输入备注信息"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#userForm').resetForm();">关闭
+                    </button>
+                    <button type="button" id="btnSubmit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">删除成员</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该成员
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="authModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">权限设置</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm" class="form-horizontal">
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" id="btnConfirmAuth" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script id="sourcePart" type="text/html">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="checkbox checkbox-inline i-checks">
+                        <label>
+                            {{if checked==false}}
+                            <input type="checkbox" data-oper="source" data-level="1" value="{{id}}"> <i></i>
+                            {{name}}</label>
+                        {{else}}
+                        <input type="checkbox" data-oper="source" data-level="1" value="{{id}}" checked="checked">
+                        <i></i> {{name}}</label>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            {{each sub as value i}}
+                            <div class="checkbox checkbox-inline i-checks">
+                                <label>
+                                    {{if value.checked==false}}
+                                    <input type="checkbox" data-level="2" data-oper="source" value="{{value.id}}">
+                                    <i></i> {{value.name}}</label>
+                                {{else}}
+                                <input type="checkbox" data-level="2" data-oper="source" value="{{value.id}}"
+                                       checked="checked"> <i></i> {{value.name}}</label>
+                                {{/if}}
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (element) {
+                    element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: "span",
+                errorClass: "help-block m-b-none",
+                validClass: "help-block m-b-none"
+            });
+            $.user = {
+                init: function () {
+                    var _self = this;
+                    this.val();
+                    this.getData();
+                    this.getDepData();
+                    $('#btnSubmit').off().on('click', function () {
+                        if (_self.val().form()) {
+                            _self.submit();
+                        }
+                    });
+                },
+                getDepData: function () {
+                    $.getJSON('/permission/dep_all_datas', {}, function (res) {
+                        if (res.success) {
+                            var html = [' <option value="">请选择部门</option>'];
+                            for (var i in  res.data) {
+                                var item = res.data[i];
+                                html.push(' <option value="' + item.id + '">' + item.name + '</option>')
+                            }
+                            $("#dep_id").html(html.join(''));
+                        }
+                    });
+
+                },
+                submit: function () {
+                    var _self = this;
+                    var data = $("#userForm").formToObj();
+                    data.dep=$('#dep_id').find("option:selected").text();
+                    var titel = "修改成员"
+                    if (data.id == 0) {
+                        titel = "添加成员"
+                    }
+                    $.request("/permission/save_user", data, function (res) {
+                        if (res.success) {
+                            if (_self.table) {
+                                _self.table.ajax.reload();
+                            }
+                            toastr.success(titel, res.msg);
+                            $("#userForm").resetForm();
+                            $('#addModal').modal('hide');
+                        }
+                        else {
+                            toastr.error(titel, res.msg);
+                        }
+                    });
+                },
+                val: function () {
+                    return $("#userForm").validate({
+                        rules: {
+                            username: "required",
+                            realname: "required",
+                            email: "required",
+                            dep_id:{
+                                required: true,
+                                min: 1
+                            },
+                            pwd: "required",
+                            confirmpwd: {
+                                required: true,
+                                equalTo: '#pwd'
+                            }
+                        },
+                        messages: {
+                            username: "请输入成员名称",
+                            realname: "请输入成员姓名",
+                            email: "请输入邮箱地址",
+                            dep_id:{
+                                required: "请选择所属部门",
+                                min: "请选择所属部门"
+                            },
+                            pwd: "请输入登录密码",
+                            confirmpwd: {
+                                required: "请输入确认密码",
+                                equalTo: '两次输入密码不一致'
+                            }
+                        }
+                    });
+                },
+                table: "",
+                switcherys: [],
+                getData: function () {
+                    var _self = this;
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/permission/user_datas",
+                            dataSrc: 'data'
+                        },
+                        columns: [
+                            {data: "username"},
+                            {data: "realname"},
+                            {data: "email"},
+                            {data: "dep"},
+                            {data: "date"},
+                            {data: "lastlogin"},
+                            {
+                                data: "enabled",
+                                render: function (data, type, row, meta) {
+                                    var html = '<input data-oper="enable" name="' + row.id + '" data-id="' + row.id + '" type="checkbox" class="js-switch" ' + (data == 0 ? "" : "checked") + '  />';
+                                    return html;
+                                }
+                            },
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#authModal" data-oper="auth" href="#">权限设置</a>&nbsp;&nbsp;&nbsp;&nbsp;');
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#deleteModal" data-oper="delete" href="#">删除</a>');
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('input[data-oper="enable"]'));
+                            elems.forEach(function (html) {
+                                var switchery = new Switchery(html);
+                                html.onchange = function () {
+                                    _self.enable($(this));
+                                }
+                            });
+
+                            $('a[data-oper="auth"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.auth(id);
+                            });
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.edit(id);
+                            });
+                            $('a[data-oper="delete"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.delete(id);
+                            });
+
+                            $('#length').on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+                auth: function (id) {
+                    var _self = this;
+                    $.getJSON('/permission/sources', {type: 1, id: id}, function (res) {
+                        if (res.success) {
+                            var html = [];
+                            for (var i in  res.data) {
+                                var item = res.data[i];
+                                html.push(template("sourcePart", item));
+                            }
+                            $('#authForm').html(html.join(''));
+                            $('.i-checks').iCheck({
+                                handle: 'checkbox',
+                                checkboxClass: 'icheckbox_square-green',
+                                radioClass: 'iradio_square-green',
+                            });
+                            $('input[data-oper="source"][data-level="1"]').on('ifChecked', function () {
+                                var parent = $(this).closest('.col-lg-12');
+                                parent.find('input[data-level="2"]').iCheck('check');
+                            });
+                            $('input[data-oper="source"][data-level="1"]').on('ifUnchecked', function () {
+                                var parent = $(this).closest('.col-lg-12');
+                                parent.find('input[data-level="2"]').iCheck('uncheck');
+                            });
+                            $('#btnConfirmAuth').off().on('click', function () {
+                                _self.save_auth(id);
+                            });
+                        }
+                    });
+                },
+                save_auth: function (id) {
+                    var checkedIds = [];
+                    $('input[data-oper="source"]:checked').each(function () {
+                        checkedIds.push($(this).val());
+                    });
+                    $.request('/permission/save_sources', {id: id, ids: checkedIds.join(','), type: 2}, function (res) {
+                        if (res.success) {
+                            toastr.success("权限设置", res.msg);
+                        }
+                        else {
+                            toastr.error("权限设置", res.msg);
+                        }
+                        $('#authModal').modal('hide');
+                    });
+                },
+                delete: function (id) {
+                    var _self = this;
+                    $('#btnConfirmDelete').off().on('click', function () {
+                        $.request('/permission/delete_user', {id: id}, function (res) {
+                            if (res.success) {
+                                if (_self.table) {
+                                    _self.table.ajax.reload();
+                                }
+                                toastr.success("删除成员", res.msg);
+                            }
+                            else {
+                                toastr.error("删除成员", res.msg);
+                            }
+                            $('#deleteModal').modal('hide');
+                        });
+                    });
+                },
+                edit: function (id) {
+                    $.getJSON('/permission/user_data', {id: id}, function (res) {
+                        if (res.success) {
+                            $("#userForm").ObjToForm(res.data);
+                        }
+                    });
+                    $('#addTitle').text('修改成员');
+                },
+                enable: function (obj) {
+                    var id = parseInt(obj.attr('name'));
+                    var enable = obj.prop('checked') == true ? 1 : 0;
+                    var _self = this;
+                    $.request('/permission/enable_user', {id: id, enabled: enable}, function (res) {
+                        if (res.success) {
+                            toastr.success("启用成员", res.msg);
+                        }
+                        else {
+                            toastr.error("启用成员", res.msg);
+                        }
+                    });
+                }
+            }
+            $(function () {
+                $.user.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

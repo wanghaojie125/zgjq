@@ -1,0 +1,193 @@
+<!-- Data Tables -->
+<link href="/content/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/content/css/plugins/switchery/switchery.css" rel="stylesheet">
+<link href="/content/css/plugins/iCheck/custom.css" rel="stylesheet">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>
+                        数据列表
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-7 m-b-xs">
+                        </div>
+                        <!--<div class="col-sm-1 m-b-xs">-->
+                        <!--<button class="btn btn-white btn-outline" data-toggle="modal" data-target="/"-->
+                        <!--type="button">添加-->
+                        <!--</button>-->
+                        <!--</div>-->
+                        <div class="col-sm-2 m-b-xs">
+                            <select class="input-sm form-control input-s-sm inline" id="length">
+                                <option value="10" selected="selected">显示条数</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 m-b-xs">
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <div class="checkbox checkbox-inline i-checks">
+                                            <label>
+                                                <input type="checkbox" data-oper="goods" value="0">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>合同编号</th>
+                            <th>起始时间</th>
+                            <th>结束时间</th>
+                            <th>订单金额</th>
+                            <th>联系人</th>
+                            <th>合同负责人</th>
+                            <th>公司名称</th>
+                            <th>订单状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal inmodal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="$('#depForm').resetForm();"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">删除商品</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该部门
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal"
+                            onclick="$('#depForm').resetForm();">关闭
+                    </button>
+                    <button type="button" id="btnConfirmDelete" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/content/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/content/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/content/js/plugins/validate/messages_zh.min.js"></script>
+    <!-- jQuery Form plugin javascript-->
+    <script src="/content/js/jquery.form.js"></script>
+    <!-- Switchery -->
+    <script src="/content/js/plugins/switchery/switchery.js"></script>
+
+    <!-- iCheck -->
+    <script src="/content/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        (function ($) {
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (element) {
+                    element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: "span",
+                errorClass: "help-block m-b-none",
+                validClass: "help-block m-b-none"
+            });
+            $.order = {
+                init: function () {
+                    var _self = this;
+                    this.getData();
+                },
+                table: "",
+                getData: function () {
+                    var _self = this;
+                    var pageLength = $('#length').val();
+                    this.table = $('#dataTable').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ordering: false,
+                        pageLength: pageLength,
+                        pagingType: "full_numbers",
+                        stateSave: true,
+                        bLengthChange: false,
+                        ajax: {
+                            url: "/order/confirm_list_data",
+                            dataSrc: 'data'
+                        },
+                        columns: [
+                            {
+                                data: "null",
+                                render: function (data, type, row, meta) {
+                                    var html = ' <div class="form-group"> <div class="col-sm-10"> <div class="checkbox checkbox-inline i-checks"> <label> <input type="checkbox" data-oper="goods" value="0"> </label> </div> </div> </div>';
+                                    return html;
+                                }
+                            },
+                            {data: "contract_no"},
+                            {
+                                data: "create_at",
+                            },
+                            {data: "end_at"},
+                            {
+                                data: "amount",
+                            },
+                            {data: "name"},
+                            {data: "operator_name"},
+                            {data: "company"},
+                            {data: "status"},
+                            {
+                                data: null,
+                                render: function (data, type, row, meta) {
+                                    var html = [];
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#authModal" data-oper="auth" href="#">查看</a>&nbsp;&nbsp;&nbsp;');
+                                    html.push('<a data-id="' + row.id + '" data-toggle="modal" data-target="#addModal" data-oper="edit" href="#">编辑</a>&nbsp;&nbsp;&nbsp;')
+                                    return html.join('');
+                                }
+                            }
+                        ],
+                        fnDrawCallback: function () {
+                            $('a[data-oper="auth"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.auth(id);
+                            });
+                            $('a[data-oper="edit"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.edit(id);
+                            });
+                            $('a[data-oper="delete"]').off().on('click', function () {
+                                var id = $(this).data('id');
+                                _self.delete(id);
+                            });
+
+                            $('#length').on('change', function () {
+                                var index = $(this).val();
+                                if (_self.table) {
+                                    _self.table.page.len(index);
+                                    _self.table.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                },
+            }
+            $(function () {
+                $.order.init();
+            });
+        })(jQuery)
+
+    </script>
+</div>

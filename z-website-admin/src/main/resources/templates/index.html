@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title>首页</title>
+    <link th:href="@{/content/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/content/font-awesome/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/content/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/content/css/style.css}" rel="stylesheet">
+    <link th:href="@{/content/css/plugins/toastr/toastr.min.css}" rel="stylesheet">
+
+    <script th:src="@{/content/js/jquery-2.1.1.min.js}"></script>
+    <script th:src="@{/content/js/bootstrap.min.js}"></script>
+    <script th:src="@{/content/js/base.js}"></script>
+    <!-- Toastr script -->
+    <script th:src="@{/content/js/plugins/toastr/toastr.min.js}"></script>
+
+    <!-- Toastr script -->
+    <script th:src="@{/content/js/art.template.js}"></script>
+
+    <!-- Data Tables -->
+    <script src="/content/js/plugins/dataTables/jquery.dataTables.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                                <span>
+                                    <img style="height: 65px;width: 65px;" alt="image" class="img-circle" id="user_head"
+                                         src="/content/img/default.png"/>
+                                </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="clear">
+                                        <span class="block m-t-xs">
+                                            <strong
+                                                    class="font-bold" id="dep">
+                                            </strong>
+                                        </span>
+                                        <span class="text-muted text-xs block" id="user_name">
+                                        </span>
+                                    </span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        z
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message"></i></a>欢迎使用Z后台主题</span>
+                    </li>
+                    <li>
+                        <a href="/logout">
+                            <i class="fa fa-sign-out"></i> 退出
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10" id="titleInfo">
+                <h2>系统首页</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/">主页</a>
+                    </li>
+                    <li>
+                        <strong>系统首页</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content" id="content">
+
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                By：<a href="#">jrss</a>
+            </div>
+            <div>
+                <strong>Copyright</strong> &copy; 2018
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="menuTemplate">
+    {{each list as value i}}
+    <li>
+        <a href="{{value.url}}">
+            <i class="{{value.css}}"></i>
+            <span class="nav-label">{{value.name}}</span>
+            <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            {{each value.sub as value i}}
+            <li><a data-url="{{value.url}}" href="javascript:void(0);">{{value.name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </li>
+    {{/each}}
+</script>
+
+<!-- Mainly scripts -->
+<script th:src="@{/content/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/content/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- Custom and plugin javascript -->
+<script th:src="@{/content/js/hplus.js}"></script>
+<script th:src="@{/content/js/plugins/pace/pace.min.js}"></script>
+<!-- jQuery UI -->
+<script th:src="@{/content/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+<script type="text/javascript">
+    (function ($) {
+        $.index = {
+            init: function () {
+                this.init_menu();
+                this.init_page();
+                this.init_user();
+            },
+            init_page: function () {
+                var cur_url = window.localStorage.getItem('cur_url');
+                if (cur_url == undefined || cur_url == null || cur_url == "" || cur_url == "/") {
+                    cur_url = "/home";
+                }
+                $('#content').load(cur_url);
+                var a = $('#side-menu').find("a[data-url='" + cur_url + "']");
+                if (a) {
+                    a.parent().addClass("active");
+                    a.parent().parent().parent().addClass("active");
+                }
+            },
+            init_user: function () {
+                $.getJSON("/permission/cur_user", {}, function (res) {
+                    if (res.success) {
+                        $('#user_name').html(res.data.username);
+                        if (res.data.head_portraits) {
+                            $('#user_head').attr('src', res.data.head_portraits);
+                        }
+                        $('#dep').html(res.data.dep);
+                    }
+                });
+            },
+            init_menu: function () {
+                var _self = this;
+                $.getJSON("/permission/cur_sources", {}, function (res) {
+                    if (res.success) {
+                        var temData = {
+                            list: res.data
+                        }
+                        var html = template("menuTemplate", temData);
+                        $('#side-menu').append(html).metisMenu();
+                        _self.init_page();
+                    }
+                });
+            }
+        }
+        $(function () {
+            $.index.init();
+        });
+    })(jQuery)
+</script>
+</body>
+
+</html>

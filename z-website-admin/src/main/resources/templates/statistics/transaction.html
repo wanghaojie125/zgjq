@@ -1,0 +1,578 @@
+<link href="/content/css/plugins/datapicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>交易数据</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row" style="margin-bottom: -20px;">
+                <form class="form-horizontal">
+                    <div class="col-sm-3">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white" data-oper="tran" data-d="day">
+                                <input type="radio" name="tran">昨天</label>
+                            <label class="btn btn-sm btn-white active" data-oper="tran" data-d="week">
+                                <input type="radio" name="tran">最近七天</label>
+                            <label class="btn btn-sm btn-white" data-oper="tran" data-d="month">
+                                <input type="radio" name="tran">最近30天</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_tran_start_date">
+                                <input placeholder="起始时间" class="form-control" id="read_search_tran_start_date"
+                                       size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_tran_start_date" name="search_tran_start_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_tran_end_date">
+                                <input placeholder="结束时间" class="form-control" id="read_search_tran_end_date" size="16"
+                                       type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_tran_end_date" name="search_tran_end_date" value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <button class="btn btn-white btn-outline" type="button" id="btnTranSearch">统计</button>
+                    </div>
+                </form>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-lg-5">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <tr>
+                            <th>
+                                浏览人数
+                            </th>
+                            <th>
+                                上传附件人数
+                            </th>
+                            <th>
+                                订单数
+                            </th>
+                            <th>
+                                有效订单
+                            </th>
+                            <th>
+                                下单金额
+                            </th>
+                        </tr>
+                        <tr>
+                            <td id="browseCount">
+                                0
+                            </td>
+                            <td id="dwgCount">
+                                0
+                            </td>
+                            <td id="orderCount">
+                                0
+                            </td>
+                            <td id="payOrderCount">
+                                0
+                            </td>
+                            <td id="payAmount">
+                                0
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <tr>
+                            <th>
+                                下单转化率
+                            </th>
+                            <th>
+                                付款转化率
+                            </th>
+                            <th>
+                                成交转化率
+                            </th>
+                        </tr>
+                        <tr>
+                            <td id="orderChange">
+                                0%
+                            </td>
+                            <td id="payChange">
+                                0%
+                            </td>
+                            <td id="payForBrChange">
+                                0%
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-7" id="transactionChat" style="height: 300px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>新老客户交易构成</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row" style="margin-bottom: -20px;">
+                <form class="form-horizontal">
+                    <div class="col-sm-3">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white active" data-oper="mem" data-d="month_t">
+                                <input type="radio" name="mem">本月</label>
+                            <label class="btn btn-sm btn-white " data-oper="mem" data-d="month_y">
+                                <input type="radio" name="mem">上月</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_mem_start_date">
+                                <input placeholder="选择月份" class="form-control" id="read_search_mem_start_date"
+                                       size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_mem_start_date" name="search_mem_start_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <button class="btn btn-white btn-outline" type="button" id="btnMemSearch">统计</button>
+                    </div>
+                </form>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-lg-6" id="memChat" style="height: 300px;">
+
+                </div>
+                <div class="col-lg-6">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <tr>
+                            <td>
+
+                            </td>
+                            <th>
+                                付款金额
+                            </th>
+                            <th>
+                                较前一月
+                            </th>
+                            <th>
+                                付款人数
+                            </th>
+                            <th>
+                                较前一月
+                            </th>
+                        </tr>
+                        <tr id="new_mem">
+                            <td>
+                                新用户
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                        </tr>
+                        <tr id="old_mem">
+
+                            <td>
+                                老用户
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                0
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>交易数据</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row" style="margin-bottom: -20px;">
+                <form class="form-horizontal">
+                    <div class="col-sm-3">
+                        <div data-toggle="buttons" class="btn-group">
+                            <label class="btn btn-sm btn-white" data-oper="amount" data-d="day">
+                                <input type="radio" name="amount">昨天</label>
+                            <label class="btn btn-sm btn-white active" data-oper="amount" data-d="week">
+                                <input type="radio" name="amount">最近七天</label>
+                            <label class="btn btn-sm btn-white" data-oper="amount" data-d="month">
+                                <input type="radio" name="amount">最近30天</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_amount_start_date">
+                                <input placeholder="起始时间" class="form-control" id="read_search_amount_start_date"
+                                       size="16" type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_amount_start_date" name="search_amount_start_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="col-sm-12">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="search_amount_end_date">
+                                <input placeholder="结束时间" class="form-control" id="read_search_amount_end_date"
+                                       size="16"
+                                       type="text"
+                                       value=""
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="search_amount_end_date" name="search_amount_end_date"
+                                   value=""/><br/>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <button class="btn btn-white btn-outline" type="button" id="btnAmountSearch">统计</button>
+                    </div>
+                </form>
+            </div>
+            <hr/>
+            <div class="row">
+                <div id="amountChat">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Data picker -->
+<script src="/content/js/plugins/datapicker/bootstrap-datetimepicker.min.js"></script>
+<!-- highcharts -->
+<script src="/content/js/highcharts.js"></script>
+<script src="/content/js/funnel.js"></script>
+<script src="/content/js/exporting.js"></script>
+<script type="text/javascript">
+    (function ($) {
+        $.gallary = {
+            init: function () {
+                var _self = this;
+                $('.form_datetime').datetimepicker({
+                    weekStart: 1,
+                    todayBtn: 1,
+                    autoclose: 1,
+                    todayHighlight: 1,
+                    startView: 2,
+                    forceParse: 0,
+                    showMeridian: 1
+                });
+                this.get_transaction();
+                this.get_mem();
+                this.get_amount();
+                $('#btnTranSearch').off().on('click', function () {
+                    _self.get_transaction();
+                });
+                $('#btnMemSearch').off().on('click', function () {
+                    _self.get_mem();
+                });
+                $('#btnAmountSearch').off().on('click', function () {
+                    _self.get_amount();
+                });
+            },
+            get_transaction: function () {
+                var data = {
+                    day: "0",
+                    week: "0",
+                    month: "0",
+                    start: "",
+                    end: ""
+                };
+                $('label[data-oper="tran"]').each(function () {
+                    var d = $(this).data("d");
+                    if ($(this).hasClass("active")) {
+                        data[d] = "1";
+                    }
+                    else {
+                        data[d] = "0";
+                    }
+                });
+                data.start = $('#search_tran_start_date').val();
+                data.end = $('#search_tran_end_date').val();
+                $.getJSON("statistics/transaction_by_time", data, function (res) {
+                        if (res.success) {
+                            $('#browseCount').html(res.data.browseCount);
+                            $('#orderCount').html(res.data.orderCount);
+                            $('#payAmount').html(res.data.payAmount);
+                            $('#payOrderCount').html(res.data.payOrderCount);
+                            $('#dwgCount').html(res.data.dwgCount);
+
+                            $('#orderChange').html((res.data.orderCount / (res.data.browseCount == 0 ? 1 : res.data.browseCount)).toFixed(2) * 100 + "%");
+                            $('#payChange').html((res.data.payOrderCount / (res.data.orderCount == 0 ? 1 : res.data.payOrderCount)).toFixed(2) * 100 + "%");
+                            $('#payForBrChange').html((res.data.payOrderCount / (res.data.browseCount == 0 ? 1 : res.data.browseCount)).toFixed(2) * 100 + "%");
+
+                            var data = [
+                                ['浏览', res.data.browseCount],
+                                ['下单', res.data.orderCount],
+                                ['付款', res.data.payOrderCount],
+                            ]
+                            var chart = Highcharts.chart('transactionChat', {
+                                chart: {
+                                    type: 'pyramid',
+                                    marginRight: 100
+                                },
+                                title: {
+                                    text: '转化金字塔',
+                                    x: -50
+                                },
+                                plotOptions: {
+                                    series: {
+                                        reversed: false,
+                                        dataLabels: {
+                                            enabled: true,
+                                            format: '<b>{point.name}</b> ({point.y:,.0f})',
+                                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                                            softConnector: true
+                                        }
+                                    }
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                series: [{
+                                    name: '用户',
+                                    data: data,
+                                }]
+                            });
+                        }
+                    }
+                )
+                ;
+            },
+            get_mem: function () {
+                var data = {
+                    month_t: "0",
+                    month_y: "0",
+                    start: "",
+                };
+                $('label[data-oper="mem"]').each(function () {
+                    var d = $(this).data("d");
+                    if ($(this).hasClass("active")) {
+                        data[d] = "1";
+                    }
+                    else {
+                        data[d] = "0";
+                    }
+                });
+                data.start = $('#search_mem_start_date').val();
+                $.getJSON("statistics/mem_by_time", data, function (res) {
+                        if (res.success) {
+                            var date = new Date();
+                            var month = "";
+                            var last_month = "";
+                            if (data.month_t == "1") {
+                                month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                                date.setMonth(date.getMonth() - 1);
+                                last_month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                            }
+                            if (data.month_y == "1") {
+                                date.setMonth(date.getMonth() - 1);
+                                month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                                date.setMonth(date.getMonth() - 1);
+                                last_month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                            }
+                            if (data.start != "") {
+                                date = new Date(data.start);
+                                month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                                date.setMonth(date.getMonth() - 1);
+                                last_month = date.getFullYear() + "-" + (date.getMonth() + 1);
+                            }
+                            var t = null;
+                            var l = null;
+                            var new_count = 0,
+                                old_count = 0,
+                                new_p = 0,
+                                old_p = 0,
+                                new_a = 0,
+                                old_a = 0;
+                            var l_new_p = 0,
+                                l_old_p = 0,
+                                l_new_a = 0,
+                                l_old_a = 0;
+                            $(res.data).each(function () {
+                                if (this.months == month && this.m_months == month) {
+                                    new_count += this.count;
+                                    new_p += this.m_count;
+                                    new_a += this.amount;
+                                }
+                                else if (this.months == month && this.m_months != month) {
+                                    old_count += this.count;
+                                    old_p += this.m_count;
+                                    old_a += this.amount;
+                                }
+
+                                if (this.months == last_month && this.m_months == last_month) {
+                                    l_new_p += this.m_count;
+                                    l_new_a += this.amount;
+                                }
+                                else if (this.months == last_month && this.m_months != last_month) {
+                                    l_old_p += this.m_count;
+                                    l_old_a += this.amount;
+                                }
+                            });
+
+                            var chartData = [
+                                ['新用户', new_count / (new_count + old_count)],
+                                ['老用户', old_count / (new_count + old_count)]
+                            ]
+                            $('#new_mem').html('<td>新用户</td><td>' + new_a + '</td><td>' + (((new_a - l_new_a) / (l_new_a == 0 ? 1 : l_new_a)) * 100) + '%</td><td>' + new_p + '</td><td>' + (((new_p - l_new_p) / (l_new_p == 0 ? 1 : l_new_p)) * 100) + '%</td>');
+                            $('#old_mem').html('<td>老用户</td><td>' + old_a + '</td><td>' + (((old_a - l_old_a) / (l_old_a == 0 ? 1 : l_old_a)) * 100) + '%</td><td>' + old_p + '</td><td>' + (((old_p - l_old_p) / (l_old_p == 0 ? 1 : l_old_p)) * 100) + '%</td>');
+
+                            var chart = Highcharts.chart('memChat', {
+                                title: {
+                                    text: '新老用户交易占比'
+                                },
+                                tooltip: {
+                                    headerFormat: '{series.name}<br>',
+                                    pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                                },
+                                plotOptions: {
+                                    pie: {
+                                        allowPointSelect: true,
+                                        cursor: 'pointer',
+                                        dataLabels: {
+                                            enabled: false
+                                        },
+                                        showInLegend: true // 设置饼图是否在图例中显示
+                                    }
+                                },
+                                series: [{
+                                    type: 'pie',
+                                    name: '新老用户交易占比',
+                                    data: chartData
+                                }]
+                            });
+                        }
+                    }
+                )
+                ;
+            },
+            get_amount: function () {
+                var data = {
+                    day: "0",
+                    week: "0",
+                    month: "0",
+                    start: "",
+                    end: ""
+                };
+                $('label[data-oper="amount"]').each(function () {
+                    var d = $(this).data("d");
+                    if ($(this).hasClass("active")) {
+                        data[d] = "1";
+                    }
+                    else {
+                        data[d] = "0";
+                    }
+                });
+                data.start = $('#search_amount_start_date').val();
+                data.end = $('#search_amount_end_date').val();
+                $.getJSON("statistics/tran_for_amount_range_by_time", data, function (res) {
+                        if (res.success) {
+                            var chartData = [];
+                            for (var i in res.data) {
+                                chartData.push(res.data[i]);
+                            }
+                            var chart = Highcharts.chart('amountChat', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: '交易数据'
+                                },
+                                xAxis: {
+                                    categories: [
+                                        '0-50元', '51-100元', '101-200元', '201-500元', '501-1000元', '1001-5000元', '5001-10000元', '10001元以上'
+                                    ],
+                                    crosshair: true
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        text: '订单数 (个)'
+                                    }
+                                },
+                                tooltip: {
+                                    // head + 每个 point + footer 拼接成完整的 table
+                                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} 个</b></td></tr>',
+                                    footerFormat: '</table>',
+                                    shared: true,
+                                    useHTML: true
+                                },
+                                plotOptions: {
+                                    column: {
+                                        borderWidth: 0
+                                    }
+                                },
+                                series: [{
+                                    name: '价格区间',
+                                    data: chartData
+                                }]
+                            });
+                        }
+                    }
+                )
+                ;
+            },
+        }
+        $(function () {
+            $.gallary.init();
+        });
+    })
+    (jQuery)
+</script>

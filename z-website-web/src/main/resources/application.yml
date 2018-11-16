@@ -1,0 +1,46 @@
+server:
+  port: 8890
+  servlet:
+    context-path: /
+  tomcat:
+    max-http-post-size: -1
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3366/zgjx?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: admin123
+  mvc:
+    static-path-pattern: /**
+    # 默认值为 classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  thymeleaf:
+    encoding: UTF-8
+    mode: HTML
+  mail:
+    host: xx.xx
+    username: xx.xx
+    password: xx.xx
+    default-encoding: utf-8
+    properties:
+         mail:
+            smtp:
+               auth: true
+               starttls:
+                     enable: true
+                     required: true
+
+conf:
+  upload_path: D:\My\Java\file\
+  img_url: http://localhost:8892/
+  sms_accessKeyId: xxx
+  sms_accessKeySecret: xx
+logging:
+  file: /website/log/zgjx.log
+
+#  upload_path: /website/file/imgs/
+#  img_url: http://img.zhangongjx.com/
+
